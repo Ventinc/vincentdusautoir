@@ -40,7 +40,6 @@ export function getStaticProps({
     props: {
       post,
     },
-    revalidate: 60,
   };
 }
 
