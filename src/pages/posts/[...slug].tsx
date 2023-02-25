@@ -107,7 +107,9 @@ const PostPage: NextPageWithLayout<
             </p>
             <div className="flex items-center gap-2 md:flex-col">
               <IconButton
-                href={`https://twitter.com/intent/tweet?text=Read "${post.title}" by @vincent_dstr here: ${env.NEXT_PUBLIC_URL}${post.slug}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `Read "${post.title}" by @vincent_dstr here: ${env.NEXT_PUBLIC_URL}${post.slug}`
+                )}`}
                 rounded="full"
                 size="sm"
                 target="_blank"
