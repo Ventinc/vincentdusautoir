@@ -30,6 +30,7 @@ export const SpotifyCard = () => {
                   blurDataURL={nowPlaying.imageBlur}
                   placeholder="blur"
                   fill
+                  sizes="200px"
                   className="object-cover"
                 />
               </AspectRatio>

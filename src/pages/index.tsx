@@ -67,42 +67,44 @@ const HomePage: NextPageWithLayout<
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
             <Button rounded="full" href={siteConfig.links.email}>
               Contact me
             </Button>
-            <IconButton
-              rounded="full"
-              aria-label="Twitter"
-              href={siteConfig.links.twitter}
-              target="_blank"
-            >
-              <SiTwitter />
-            </IconButton>
-            <IconButton
-              rounded="full"
-              aria-label="Instagram"
-              href={siteConfig.links.instagram}
-              target="_blank"
-            >
-              <SiInstagram />
-            </IconButton>
-            <IconButton
-              rounded="full"
-              aria-label="Youtube"
-              href={siteConfig.links.youtube}
-              target="_blank"
-            >
-              <SiYoutube />
-            </IconButton>
-            <IconButton
-              rounded="full"
-              aria-label="Github"
-              href={siteConfig.links.github}
-              target="_blank"
-            >
-              <SiGithub />
-            </IconButton>
+            <div className="flex gap-3">
+              <IconButton
+                rounded="full"
+                aria-label="Twitter"
+                href={siteConfig.links.twitter}
+                target="_blank"
+              >
+                <SiTwitter />
+              </IconButton>
+              <IconButton
+                rounded="full"
+                aria-label="Instagram"
+                href={siteConfig.links.instagram}
+                target="_blank"
+              >
+                <SiInstagram />
+              </IconButton>
+              <IconButton
+                rounded="full"
+                aria-label="Youtube"
+                href={siteConfig.links.youtube}
+                target="_blank"
+              >
+                <SiYoutube />
+              </IconButton>
+              <IconButton
+                rounded="full"
+                aria-label="Github"
+                href={siteConfig.links.github}
+                target="_blank"
+              >
+                <SiGithub />
+              </IconButton>
+            </div>
           </div>
         </div>
         <div className="relative order-first col-span-full flex w-[150px] place-self-start overflow-hidden rounded-2xl bg-purple-200 p-2 transition-all animate-in fade-in slide-in-from-right-8 duration-200 dark:bg-purple-500/30 md:order-none md:col-span-3 md:w-auto md:place-self-auto md:hover:rotate-3 lg:col-span-2">
@@ -110,6 +112,8 @@ const HomePage: NextPageWithLayout<
             <Image
               className="rounded-xl object-cover"
               src={siteConfig.myself}
+              sizes="20vw"
+              priority
               fill
               alt="Vincent Dusautoir"
             />

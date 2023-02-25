@@ -16,7 +16,11 @@ import { SiTwitter } from "react-icons/si";
 import { TbCheck, TbCopy } from "react-icons/tb";
 
 export function getStaticPaths() {
-  const paths = Post.getAll().map((post) => post.slug);
+  const paths = Post.getAll().map((post) => ({
+    params: {
+      slug: post.slugAsParams.split("/"),
+    },
+  }));
 
   return {
     paths,
