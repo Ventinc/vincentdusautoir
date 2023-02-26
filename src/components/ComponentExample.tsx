@@ -53,7 +53,7 @@ export const ComponentExample: React.FC<Props> = ({
       <TabsContent value="demo">
         <div
           className={cn(
-            "flex min-h-[350px] justify-center rounded-lg border-2 border-zinc-200 bg-white p-10 dark:border-zinc-800 dark:bg-zinc-900",
+            "my-0 flex min-h-[350px] overflow-x-auto rounded-lg border-2 border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900",
             {
               "items-center": align === "center",
               "items-start": align === "start",
@@ -62,7 +62,7 @@ export const ComponentExample: React.FC<Props> = ({
             className
           )}
         >
-          {demo}
+          <div className="mx-auto">{demo}</div>
         </div>
       </TabsContent>
       <TabsContent value="code">
