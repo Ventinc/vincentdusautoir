@@ -10,6 +10,7 @@ import { cn } from "@/utils/tailwind";
 import { DefaultSeo } from "next-seo";
 import { seoConfig } from "@/config/seo";
 import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         </main>
         <Devtools />
       </ThemeProvider>
+      <Analytics />
     </>
   );
 };
