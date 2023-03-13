@@ -49,7 +49,10 @@ const components = {
   }: React.ComponentPropsWithoutRef<"img">) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={cn("rounded-md border border-zinc-200", className)}
+      className={cn(
+        "rounded-md border border-zinc-200 dark:border-zinc-700",
+        className
+      )}
       alt={alt}
       {...props}
     />

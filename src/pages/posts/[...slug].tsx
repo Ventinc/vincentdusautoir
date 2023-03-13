@@ -74,7 +74,7 @@ const PostPage: NextPageWithLayout<
         <div className="col-blog-wide mb-4 animate-in fade-in slide-in-from-top-8 md:mb-12">
           <AspectRatio
             ratio={16 / 9}
-            className="overflow-hidden rounded-2xl border-2 border-slate-100 md:border-4"
+            className="overflow-hidden rounded-2xl border-2 border-slate-100 dark:border-zinc-800 md:border-4"
           >
             <Image src={post.image} alt={post.title} fill />
           </AspectRatio>
