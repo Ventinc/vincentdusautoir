@@ -10,7 +10,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@prisma/client": "^4.11.0",
     "@radix-ui/react-aspect-ratio": "^1.0.2",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-navigation-menu": "^1.1.2",
@@ -63,7 +62,6 @@
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.4",
-    "prisma": "^4.11.0",
     "rehype": "^12.0.1",
     "rehype-autolink-headings": "^6.1.1",
     "rehype-slug": "^5.1.0",
