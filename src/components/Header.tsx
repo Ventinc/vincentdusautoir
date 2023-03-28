@@ -9,7 +9,7 @@ export const Header = () => {
   const router = useRouter();
 
   return (
-    <div className="container pointer-events-none sticky top-2 z-10 my-4 flex justify-center md:top-6 md:my-12">
+    <div className="container pointer-events-none sticky top-2 z-50 my-4 flex justify-center md:top-6 md:my-12">
       <div className="pointer-events-auto flex flex-1 gap-4 rounded-full bg-white/40 backdrop-blur-sm dark:bg-zinc-900/40 md:flex-none">
         <Avatar
           className="hidden h-12 w-12 cursor-pointer rounded-full border-2 border-zinc-200 bg-white p-1 text-zinc-700 transition-all duration-150 hover:scale-105 hover:border-brand-200 hover:text-purple-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-purple-400/30 dark:hover:text-purple-300 md:block"
