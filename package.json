@@ -27,7 +27,7 @@
     "contentlayer": "^0.3.2",
     "date-fns": "^2.30.0",
     "markdown-wasm": "^1.2.0",
-    "next": "13.4.0",
+    "next": "13.2.4",
     "next-contentlayer": "^0.3.2",
     "next-seo": "^6.0.0",
     "next-themes": "^0.2.1",
