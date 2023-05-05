@@ -3,13 +3,14 @@ import { QuoteCard } from "@/components/QuoteCard";
 import { SpotifyCard } from "@/components/SpotifyCard";
 import { Button, IconButton } from "@/components/ui/Button";
 import { H1, H2, H3, Link } from "@/components/ui/Typography";
+import NextLink from "next/link";
 import { siteConfig } from "@/config/site";
 import { useToggleTheme } from "@/hooks/useToggleTheme";
 import { appRouter } from "@/server/api/root";
 import { createInnerTRPCContext } from "@/server/api/trpc";
 import { Post } from "@/utils/content";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import { createServerSideHelpers } from "@trpc/react-query/server";
 import { format } from "date-fns";
 import { type InferGetServerSidePropsType } from "next";
 import Image from "next/image";
@@ -19,15 +20,15 @@ import superjson from "superjson";
 import { type NextPageWithLayout } from "./_app";
 
 export async function getServerSideProps() {
-  const ssg = createProxySSGHelpers({
+  const helpers = createServerSideHelpers({
     router: appRouter,
     ctx: createInnerTRPCContext({}),
     transformer: superjson,
   });
 
-  await ssg.spotify.nowPlaying.prefetch();
-  await ssg.spotify.topTracks.prefetch({ count: 12 });
-  await ssg.quote.random.prefetch();
+  await helpers.spotify.nowPlaying.prefetch();
+  await helpers.spotify.topTracks.prefetch({ count: 12 });
+  await helpers.quote.random.prefetch();
 
   const latestPosts = Post.getLatest().map((post) => {
     return {
@@ -42,7 +43,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      trpcState: ssg.dehydrate(),
+      trpcState: helpers.dehydrate(),
       latestPosts,
     },
   };
@@ -68,41 +69,29 @@ const HomePage: NextPageWithLayout<
           </div>
 
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <Button rounded="full" href={siteConfig.links.email}>
-              Contact me
+            <Button rounded="full" asChild>
+              <NextLink href={siteConfig.links.email}>Contact me</NextLink>
             </Button>
             <div className="flex gap-3">
-              <IconButton
-                rounded="full"
-                aria-label="Twitter"
-                href={siteConfig.links.twitter}
-                target="_blank"
-              >
-                <SiTwitter />
+              <IconButton rounded="full" aria-label="Twitter" asChild>
+                <NextLink href={siteConfig.links.twitter} target="_blank">
+                  <SiTwitter />
+                </NextLink>
               </IconButton>
-              <IconButton
-                rounded="full"
-                aria-label="Instagram"
-                href={siteConfig.links.instagram}
-                target="_blank"
-              >
-                <SiInstagram />
+              <IconButton rounded="full" aria-label="Instagram" asChild>
+                <NextLink href={siteConfig.links.instagram} target="_blank">
+                  <SiInstagram />
+                </NextLink>
               </IconButton>
-              <IconButton
-                rounded="full"
-                aria-label="Youtube"
-                href={siteConfig.links.youtube}
-                target="_blank"
-              >
-                <SiYoutube />
+              <IconButton rounded="full" aria-label="Youtube" asChild>
+                <NextLink href={siteConfig.links.youtube} target="_blank">
+                  <SiYoutube />
+                </NextLink>
               </IconButton>
-              <IconButton
-                rounded="full"
-                aria-label="Github"
-                href={siteConfig.links.github}
-                target="_blank"
-              >
-                <SiGithub />
+              <IconButton rounded="full" aria-label="Github" asChild>
+                <NextLink href={siteConfig.links.github} target="_blank">
+                  <SiGithub />
+                </NextLink>
               </IconButton>
             </div>
           </div>

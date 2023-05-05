@@ -1,8 +1,8 @@
 import { cn } from "@/utils/tailwind";
 import { cva, type VariantProps } from "class-variance-authority";
-import React, { useMemo } from "react";
+import React, { type ComponentPropsWithoutRef, useMemo } from "react";
 import { TbLoader } from "react-icons/tb";
-import { ButtonOrLink, type Props as ButtonOrLinkProps } from "../ButtonOrLink";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 
 export const baseButtonVariants = cva(
   "font-medium text-center relative whitespace-nowrap align-middle outline-none inline-flex items-center justify-center",
@@ -28,17 +28,15 @@ export const baseButtonVariants = cva(
   }
 );
 
-export type BaseButtonProps = ButtonOrLinkProps &
+export type BaseButtonProps = ComponentPropsWithoutRef<"button"> &
   VariantProps<typeof baseButtonVariants> & {
     isLoading?: boolean;
     leftIcon?: React.ReactElement;
     rightIcon?: React.ReactElement;
+    asChild?: boolean;
   };
 
-export const BaseButton = React.forwardRef<
-  React.ElementRef<typeof ButtonOrLink>,
-  BaseButtonProps
->(
+export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
   (
     {
       className,
@@ -49,10 +47,13 @@ export const BaseButton = React.forwardRef<
       children,
       isLoading,
       disabled,
+      asChild,
       ...props
     },
     ref
   ) => {
+    const Comp = (asChild ? Slot : "button") as "button";
+
     const { icon, iconPlacement } = useMemo(() => {
       let icon = rightIcon ? rightIcon : leftIcon;
 
@@ -67,7 +68,7 @@ export const BaseButton = React.forwardRef<
     }, [isLoading, leftIcon, rightIcon]);
 
     return (
-      <ButtonOrLink
+      <Comp
         className={cn(baseButtonVariants({ size, rounded, className }))}
         ref={ref}
         disabled={disabled || isLoading}
@@ -84,7 +85,7 @@ export const BaseButton = React.forwardRef<
             {icon}
           </span>
         ) : null}
-        {children}
+        <Slottable>{children}</Slottable>
         {icon && iconPlacement === "right" ? (
           <span
             className={cn(
@@ -95,7 +96,7 @@ export const BaseButton = React.forwardRef<
             {icon}
           </span>
         ) : null}
-      </ButtonOrLink>
+      </Comp>
     );
   }
 );

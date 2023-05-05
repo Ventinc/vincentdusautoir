@@ -14,6 +14,7 @@ import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { SiTwitter } from "react-icons/si";
 import { TbCheck, TbCopy } from "react-icons/tb";
+import NextLink from "next/link";
 
 export function getStaticPaths() {
   const paths = Post.getAll().map((post) => ({
@@ -106,15 +107,15 @@ const PostPage: NextPageWithLayout<
               Share
             </p>
             <div className="flex items-center gap-2 md:flex-col">
-              <IconButton
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `Read "${post.title}" by @vincent_dstr here: ${env.NEXT_PUBLIC_URL}${post.slug}`
-                )}`}
-                rounded="full"
-                size="sm"
-                target="_blank"
-              >
-                <SiTwitter />
+              <IconButton asChild rounded="full" size="sm">
+                <NextLink
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    `Read "${post.title}" by @vincent_dstr here: ${env.NEXT_PUBLIC_URL}${post.slug}`
+                  )}`}
+                  target="_blank"
+                >
+                  <SiTwitter />
+                </NextLink>
               </IconButton>
               <IconButton
                 onClick={() => copy(`${env.NEXT_PUBLIC_URL}${post.slug}`)}

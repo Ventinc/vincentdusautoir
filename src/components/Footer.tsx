@@ -4,6 +4,7 @@ import Image from "next/image";
 import { TbMoonStars, TbRss, TbSun } from "react-icons/tb";
 import { Button, IconButton } from "./ui/Button";
 import { H4, Link } from "./ui/Typography";
+import NextLink from "next/link";
 
 export const Footer = () => {
   const toggleTheme = useToggleTheme();
@@ -38,9 +39,11 @@ export const Footer = () => {
               }
               size="xs"
               className="w-fit text-[0.6rem] uppercase tracking-widest"
-              href={siteConfig.links.email}
+              asChild
             >
-              Available for work
+              <NextLink href={siteConfig.links.email}>
+                Available for work
+              </NextLink>
             </Button>
           </div>
         </div>
@@ -97,8 +100,10 @@ export const Footer = () => {
               <TbMoonStars className="hidden dark:block" />
               <TbSun className="dark:hidden" />
             </IconButton>
-            <IconButton aria-label="RSS" variant="subtle" href="/rss">
-              <TbRss />
+            <IconButton aria-label="RSS" variant="subtle" asChild>
+              <NextLink href="/rss">
+                <TbRss />
+              </NextLink>
             </IconButton>
           </div>
         </div>
