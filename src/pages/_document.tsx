@@ -7,7 +7,7 @@ const MyDocument = () => {
       <Head />
       <body
         className={cn(
-          "min-h-screen bg-white font-sans text-zinc-900 antialiased dark:bg-zinc-900 dark:text-zinc-50"
+          "min-h-screen bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-900 dark:text-zinc-50",
         )}
       >
         <Main />

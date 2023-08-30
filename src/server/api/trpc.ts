@@ -16,7 +16,9 @@
  * These allow you to access things when processing a request, like the
  * database, the session, etc.
  */
-import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
+import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import type { AppRouter } from "@/server/api/root";
 
 type CreateContextOptions = Record<string, never>;
 
@@ -96,3 +98,6 @@ const spotifyMiddleware = t.middleware(async ({ next, ctx }) => {
 });
 
 export const spotifyProcedure = t.procedure.use(spotifyMiddleware);
+
+export type RouterInput = inferRouterInputs<AppRouter>;
+export type RouterOutput = inferRouterOutputs<AppRouter>;

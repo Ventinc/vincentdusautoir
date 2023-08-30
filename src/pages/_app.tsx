@@ -11,6 +11,7 @@ import { DefaultSeo } from "next-seo";
 import { seoConfig } from "@/config/seo";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
+import { TooltipProvider } from "@/components/ui/Tooltip";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -32,11 +33,13 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <DefaultSeo {...seoConfig} />
-        <main className={cn(fontSans.variable, "font-sans")}>
-          {getLayout(<Component {...pageProps} />)}
-        </main>
-        <Devtools />
+        <TooltipProvider>
+          <DefaultSeo {...seoConfig} />
+          <main className={cn(fontSans.variable, "font-sans")}>
+            {getLayout(<Component {...pageProps} />)}
+          </main>
+          <Devtools />
+        </TooltipProvider>
       </ThemeProvider>
       <Analytics />
     </>

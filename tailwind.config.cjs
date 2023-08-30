@@ -31,10 +31,17 @@ module.exports = {
         instagram: "#E4405F",
         github: "#181717",
         youtube: "#FF0000",
-        brand: colors.purple,
+        brand: colors.indigo,
+      },
+      keyframes: {
+        "spotify-tracks": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(calc((200px + 2rem) * -10))" },
+        },
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
+        "spotify-tracks": "spotify-tracks 60s linear infinite",
       },
       gridTemplateColumns: {
         blog: "[full-start] minmax(max(4vmin,20px),auto) [wide-start] minmax(auto,240px) [main-start] min(720px,calc(100% - max(8vmin, 40px))) [main-end] minmax(auto,240px) [wide-end] minmax(max(4vmin,20px),auto) [full-end]",
