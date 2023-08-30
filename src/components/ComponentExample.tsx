@@ -32,7 +32,7 @@ export const ComponentExample: React.FC<Props> = ({
                 <Button
                   size="xs"
                   variant="unstyled"
-                  className="data-[state=active]:bg-purple-400/40"
+                  className="data-[state=active]:bg-brand-400/40"
                 >
                   Demo
                 </Button>
@@ -59,7 +59,7 @@ export const ComponentExample: React.FC<Props> = ({
               "items-start": align === "start",
               "items-end": align === "end",
             },
-            className
+            className,
           )}
         >
           <div className="mx-auto">{demo}</div>

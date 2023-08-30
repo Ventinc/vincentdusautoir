@@ -1,8 +1,20 @@
+import { getPlaiceholder } from "plaiceholder";
 import { z } from "zod";
 import { getNowPlaying, getTopTracks } from "../external/spotify";
-import { getPlaiceholder } from "plaiceholder";
 
 import { createTRPCRouter, spotifyProcedure } from "../trpc";
+
+const getImageBlur = async (imageUrl?: string) => {
+  if (!imageUrl) return imageUrl;
+
+  const buffer = await fetch(imageUrl).then(async (res) =>
+    Buffer.from(await res.arrayBuffer()),
+  );
+
+  const { base64 } = await getPlaiceholder(buffer);
+
+  return base64;
+};
 
 export const spotifyRouter = createTRPCRouter({
   nowPlaying: spotifyProcedure.query(async ({ ctx }) => {
@@ -21,7 +33,7 @@ export const spotifyRouter = createTRPCRouter({
     }
 
     const image = data.item.album.images[0]?.url;
-    const imageBlur = image ? (await getPlaiceholder(image)).base64 : undefined;
+    const imageBlur = await getImageBlur(image);
 
     return {
       isPlaying: data.is_playing,
@@ -38,7 +50,7 @@ export const spotifyRouter = createTRPCRouter({
         .object({
           count: z.number(),
         })
-        .optional()
+        .optional(),
     )
     .query(async ({ ctx, input }) => {
       const res = await getTopTracks(ctx.accessToken);
@@ -49,9 +61,7 @@ export const spotifyRouter = createTRPCRouter({
       const tracks = await Promise.all(
         data.items.slice(0, count).map(async (item) => {
           const image = item.album.images[0]?.url;
-          const imageBlur = image
-            ? (await getPlaiceholder(image)).base64
-            : undefined;
+          const imageBlur = await getImageBlur(image);
 
           return {
             artist: item.artists.map((artist) => artist.name).join(", "),
@@ -60,7 +70,7 @@ export const spotifyRouter = createTRPCRouter({
             image,
             imageBlur,
           };
-        })
+        }),
       );
 
       return { tracks };

@@ -57,12 +57,12 @@ const HomePage: NextPageWithLayout<
   return (
     <>
       <main className="container grid grid-cols-8 gap-4 md:grid-flow-row">
-        <div className="col-span-full flex min-h-[200px] flex-col rounded-2xl bg-gradient-to-tr from-purple-50 to-purple-300 p-8 animate-in fade-in slide-in-from-left-8 dark:from-purple-500/5 dark:to-purple-500/30 md:col-span-5 lg:col-span-6">
+        <div className="col-span-full flex min-h-[200px] flex-col rounded-2xl bg-gradient-to-tr from-brand-50 to-brand-300 p-8 animate-in fade-in slide-in-from-left-8 dark:from-brand-500/5 dark:to-brand-500/30 md:col-span-5 lg:col-span-6">
           <div className="mb-12 flex-1">
             <H1 className="mt-0 font-extrabold">
               I&apos;m Vincent Dusautoir - Software Engineer
             </H1>
-            <p className="mt-3 mb-3 max-w-xl text-lg font-medium leading-7 text-slate-700 dark:text-slate-300">
+            <p className="mb-3 mt-3 max-w-xl text-lg font-medium leading-7 text-slate-700 dark:text-slate-300">
               I love building tools, learning new things or share my perspective
               on different topics. I really like to overcome tech challenges.
             </p>
@@ -96,7 +96,7 @@ const HomePage: NextPageWithLayout<
             </div>
           </div>
         </div>
-        <div className="relative order-first col-span-full flex w-[150px] place-self-start overflow-hidden rounded-2xl bg-purple-200 p-2 transition-all animate-in fade-in slide-in-from-right-8 duration-200 dark:bg-purple-500/30 md:order-none md:col-span-3 md:w-auto md:place-self-auto md:hover:rotate-3 lg:col-span-2">
+        <div className="relative order-first col-span-full flex w-[150px] place-self-start overflow-hidden rounded-2xl bg-brand-200 p-2 transition-all duration-200 animate-in fade-in slide-in-from-right-8 dark:bg-brand-500/30 md:order-none md:col-span-3 md:w-auto md:place-self-auto md:hover:rotate-3 lg:col-span-2">
           <AspectRatio ratio={1}>
             <Image
               className="rounded-xl object-cover"
@@ -109,13 +109,13 @@ const HomePage: NextPageWithLayout<
           </AspectRatio>
         </div>
         <div className="col-span-full row-span-2 rounded-2xl bg-gradient-to-b from-zinc-100 to-zinc-50 p-4 animate-in fade-in slide-in-from-left-8 dark:from-zinc-800/30 dark:to-zinc-900 md:col-span-4">
-          <H2 className="mt-0 mb-2 font-extrabold">Latest posts</H2>
+          <H2 className="mb-2 mt-0 font-extrabold">Latest posts</H2>
           <div className="flex flex-col gap-2">
             {latestPosts.map((post) => {
               return (
                 <div
                   key={post.id}
-                  className="group relative flex overflow-hidden rounded-xl bg-white p-2 pr-[110px] transition-all duration-200 hover:shadow-sm hover:ring-2 hover:ring-purple-400 hover:ring-offset-2 hover:ring-offset-slate-100 dark:bg-zinc-900 dark:ring-offset-zinc-900"
+                  className="group relative flex overflow-hidden rounded-xl bg-white p-2 pr-[110px] transition-all duration-200 hover:shadow-sm hover:ring-2 hover:ring-brand-400 hover:ring-offset-2 hover:ring-offset-slate-100 dark:bg-zinc-900 dark:ring-offset-zinc-900"
                 >
                   <div className="z-10 flex flex-col">
                     <Link
@@ -125,7 +125,7 @@ const HomePage: NextPageWithLayout<
                     >
                       {post.title}
                     </Link>
-                    <p className="whitespace-normal text-zinc-800 line-clamp-2 dark:text-zinc-100 md:line-clamp-1">
+                    <p className="line-clamp-2 whitespace-normal text-zinc-800 dark:text-zinc-100 md:line-clamp-1">
                       {post.description}
                     </p>
                     <time
@@ -152,7 +152,7 @@ const HomePage: NextPageWithLayout<
           <span className="text-3xl">🇫🇷</span>
           <H3 className="m-0 font-serif font-extrabold tracking-wide">Lille</H3>
         </div>
-        <div className="col-span-2 rounded-2xl animate-in fade-in slide-in-from-top-8 slide-in-from-right-8 lg:col-span-1">
+        <div className="col-span-2 rounded-2xl animate-in fade-in slide-in-from-right-8 slide-in-from-top-8 lg:col-span-1">
           <Button
             onClick={toggleTheme}
             variant="unstyled"

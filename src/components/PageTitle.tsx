@@ -10,7 +10,7 @@ export const PageTitle = ({ title, description, type }: Props) => {
   return (
     <div className="my-10 rounded-2xl bg-gradient-to-b from-zinc-50 to-white p-4 animate-in fade-in slide-in-from-top-8 dark:from-zinc-800/30 dark:to-zinc-900 md:my-16">
       {type ? (
-        <span className="text-sm font-semibold uppercase text-purple-400">
+        <span className="text-sm font-semibold uppercase text-brand-400">
           {type}
         </span>
       ) : null}
