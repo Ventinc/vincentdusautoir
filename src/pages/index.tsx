@@ -8,7 +8,6 @@ import { siteConfig } from "@/config/site";
 import { appRouter } from "@/server/api/root";
 import { createInnerTRPCContext } from "@/server/api/trpc";
 import { Post } from "@/utils/content";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { format } from "date-fns";
 import {
