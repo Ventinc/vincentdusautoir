@@ -16,7 +16,7 @@ type Track = RouterOutput["spotify"]["topTracks"]["tracks"][0];
 
 const SpotifyAlbum = ({ track }: { track: Track }) => {
   return (
-    <div className="group relative flex w-[200px] flex-1 shrink-0 flex-col justify-start overflow-hidden transition-all">
+    <div className="group relative flex w-[300px] flex-1 shrink-0 flex-col justify-start overflow-hidden transition-all">
       <AspectRatio className="overflow-hidden rounded-lg" ratio={1}>
         <Image
           src={track.image ?? ""}
@@ -66,8 +66,12 @@ export const SpotifyCard = () => {
 
   return (
     <Card className="relative overflow-hidden rounded-2xl bg-neutral-800 p-6 transition-all duration-200 animate-in slide-in-from-bottom-8">
+      <div className="pointer-events-none absolute inset-0 z-10">
+        <div className="absolute left-0 top-0 h-full w-[10%] bg-gradient-to-r from-neutral-800 to-neutral-800/0"></div>
+        <div className="absolute bottom-0 right-0 h-full w-[10%] bg-gradient-to-l from-neutral-800 to-neutral-800/0"></div>
+      </div>
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex flex-col md:flex-row md:items-center">
+        <div className="z-10 flex flex-col md:flex-row md:items-center">
           <div className="relative mb-2 h-6 w-6 md:mb-0 md:mr-4 md:h-10 md:w-10">
             {nowPlaying?.isPlaying ? (
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-spotify opacity-75"></span>
@@ -80,7 +84,7 @@ export const SpotifyCard = () => {
           <Tooltip>
             <TooltipContent side="left">Now Playing</TooltipContent>
             <TooltipTrigger>
-              <div className="group relative flex items-center justify-end rounded-xl bg-neutral-700 p-1 pr-2 animate-in fade-in slide-in-from-right-8">
+              <div className="group relative z-10 flex items-center justify-end rounded-xl bg-neutral-700 p-1 pr-2 animate-in fade-in slide-in-from-right-8">
                 <div className="w-12 overflow-hidden rounded-lg border-2 border-neutral-50">
                   <AspectRatio ratio={1}>
                     <Image
@@ -112,7 +116,7 @@ export const SpotifyCard = () => {
           </Tooltip>
         ) : null}
       </div>
-      <div className="animate-spotify-tracks flex w-[calc((200px+2rem)*20)] gap-8">
+      <div className="animate-spotify-tracks my-14 flex w-[calc((300px+2rem)*20)] gap-8">
         {!topTracks ? skeletonTracks : null}
         {topTracks
           ? [...topTracks.tracks, ...topTracks.tracks].map((track) => (

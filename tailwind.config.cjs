@@ -36,7 +36,9 @@ module.exports = {
       keyframes: {
         "spotify-tracks": {
           "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(calc((200px + 2rem) * -10))" },
+          "100%": {
+            transform: "translateX(calc(((300px + 2rem) * -10) + -1rem))",
+          },
         },
       },
       animation: {
