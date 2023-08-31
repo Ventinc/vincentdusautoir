@@ -59,7 +59,7 @@ const HomePage: NextPageWithLayout<
   return (
     <>
       <main className="container grid grid-cols-8 gap-4 md:grid-flow-row">
-        <Card className="col-span-full flex flex-col gap-4 rounded-2xl bg-gradient-to-tr from-brand-50 to-brand-300 p-4 animate-in fade-in slide-in-from-top-8 dark:from-brand-500/5 dark:to-brand-500/30 md:flex-row">
+        <Card className="col-span-full flex flex-col gap-4 rounded-2xl bg-gradient-to-br from-brand-200 to-neutral-50 p-4 animate-in fade-in slide-in-from-top-8 dark:from-brand-950 dark:to-neutral-800 md:flex-row">
           <div className="relative h-[200px] w-[300px] self-center overflow-hidden rounded-xl md:h-full md:w-[300px] md:self-start lg:w-[250px]">
             <Image
               className="object-cover"
