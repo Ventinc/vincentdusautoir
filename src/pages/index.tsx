@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { appRouter } from "@/server/api/root";
 import { createInnerTRPCContext } from "@/server/api/trpc";
 import { Post } from "@/utils/content";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { createServerSideHelpers } from "@trpc/react-query/server";
 import { format } from "date-fns";
 import {
@@ -58,10 +59,10 @@ const HomePage: NextPageWithLayout<
   return (
     <>
       <main className="container grid grid-cols-8 gap-4 md:grid-flow-row">
-        <Card className="col-span-full flex gap-4 rounded-2xl bg-gradient-to-tr from-brand-50 to-brand-300 p-4 animate-in fade-in slide-in-from-top-8 dark:from-brand-500/5 dark:to-brand-500/30">
-          <div className="aspect-square relative flex-1">
+        <Card className="col-span-full flex flex-col gap-4 rounded-2xl bg-gradient-to-tr from-brand-50 to-brand-300 p-4 animate-in fade-in slide-in-from-top-8 dark:from-brand-500/5 dark:to-brand-500/30 md:flex-row">
+          <div className="relative h-[200px] w-[300px] self-center overflow-hidden rounded-xl md:h-full md:w-[300px] md:self-start lg:w-[250px]">
             <Image
-              className="aspect-square rounded-xl object-cover"
+              className="object-cover"
               src={siteConfig.myself}
               sizes="20vw"
               priority
@@ -69,10 +70,10 @@ const HomePage: NextPageWithLayout<
               alt="Vincent Dusautoir"
             />
           </div>
-          <div className="flex-3 flex flex-col p-4">
+          <div className="flex-3 flex flex-col p-0 md:p-4">
             <div className="mb-12 flex-1">
               <H1 className="mt-0 font-extrabold">
-                I&apos;m Vincent Dusautoir - Software Engineer
+                I&apos;m Vincent Dusautoir
               </H1>
               <p className="mb-3 mt-3 max-w-xl text-lg font-medium leading-7 text-slate-700 dark:text-slate-300">
                 I love building tools, learning new things or share my
@@ -122,47 +123,47 @@ const HomePage: NextPageWithLayout<
             />
           </AspectRatio>
         </Card> */}
-        <Card className="col-span-full row-span-2 lg:col-span-5">
-          <H2 className="mb-4 mt-0 px-4 pt-4 font-extrabold">Latest posts</H2>
-          <div className="flex flex-col gap-2">
+        <div className="col-span-full row-span-2 animate-in fade-in slide-in-from-left-8 lg:col-span-5">
+          <H2 className="mb-2 mt-0 px-8 font-extrabold">Latest posts</H2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {latestPosts.map((post) => {
               return (
-                <div
+                <Card
                   key={post.id}
-                  className="group relative flex overflow-hidden rounded-xl bg-white p-2 pr-[110px] hover:shadow-sm hover:ring-2 hover:ring-brand-400 hover:ring-offset-2 hover:ring-offset-slate-100 dark:bg-neutral-700 dark:ring-offset-zinc-900"
+                  className="group relative flex flex-col overflow-hidden rounded-xl p-2 transition-shadow hover:shadow-md dark:bg-neutral-800 dark:shadow-white/10"
                 >
-                  <div className="z-10 flex flex-col">
-                    <Link
-                      href={post.slug}
-                      unstyled
-                      className="font-medium before:absolute before:inset-0 before:content-['']"
-                    >
-                      {post.title}
-                    </Link>
-                    <p className="line-clamp-2 whitespace-normal text-zinc-800 dark:text-zinc-100 md:line-clamp-1">
-                      {post.description}
-                    </p>
-                    <time
-                      className="text-xs text-zinc-500 dark:text-zinc-300"
-                      dateTime={post.date}
-                    >
-                      {format(new Date(post.date), "MMMM, dd yyyy")}
-                    </time>
+                  <div className="relative mb-1 w-full overflow-hidden rounded-lg">
+                    <AspectRatio ratio={21 / 9}>
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition-transform duration-200 group-hover:scale-105"
+                      />
+                    </AspectRatio>
                   </div>
-                  <div className="after:content-['' absolute right-0 top-0 h-full w-[150px] after:absolute after:inset-0 after:bg-gradient-to-r after:from-white after:to-white/0 group-hover:block dark:after:from-neutral-700 dark:after:to-neutral-900/0 md:hidden md:group-hover:animate-in md:group-hover:fade-in md:group-hover:slide-in-from-right-4">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
+                  <Link
+                    href={post.slug}
+                    unstyled
+                    className="font-semibold before:absolute before:inset-0 before:content-['']"
+                  >
+                    {post.title}
+                  </Link>
+                  <p className="line-clamp-2 whitespace-normal text-zinc-800 dark:text-zinc-100 md:line-clamp-1">
+                    {post.description}
+                  </p>
+                  <time
+                    className="text-xs text-zinc-500 dark:text-zinc-300"
+                    dateTime={post.date}
+                  >
+                    {format(new Date(post.date), "MMMM, dd yyyy")}
+                  </time>
+                </Card>
               );
             })}
           </div>
-        </Card>
-        <Card className="aspect-video relative col-span-3 flex min-h-[200px] flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl bg-cyan-50 p-0 animate-in fade-in slide-in-from-bottom-8 slide-in-from-right-8 dark:bg-cyan-600/20 md:col-span-4 lg:col-span-3">
+        </div>
+        <Card className="aspect-video relative col-span-full flex min-h-[200px] flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl bg-cyan-50 p-0 animate-in fade-in slide-in-from-right-8 dark:bg-cyan-600/20 sm:col-span-4 lg:col-span-3">
           <Image
             src="/images/lille-map.png"
             alt="Current location"
@@ -177,7 +178,7 @@ const HomePage: NextPageWithLayout<
             <span className="relative inline-flex h-6 w-6 rounded-full border-4 border-white bg-brand-400 dark:bg-brand-500"></span>
           </span>
         </Card>
-        <div className="col-span-5 md:col-span-4 lg:col-span-3">
+        <div className="col-span-full sm:col-span-4 lg:col-span-3">
           <QuoteCard />
         </div>
         <div className="col-span-full">

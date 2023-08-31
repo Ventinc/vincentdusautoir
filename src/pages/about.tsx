@@ -7,6 +7,7 @@ import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
 import { type NextPageWithLayout } from "./_app";
+import { Card } from "@/components/Card";
 
 const AboutPage: NextPageWithLayout = () => {
   return (
@@ -21,7 +22,7 @@ const AboutPage: NextPageWithLayout = () => {
 
         <div className="grid grid-flow-row grid-cols-8 gap-4">
           <div className="col-span-8 rounded-2xl p-4 lg:col-span-5">
-            <H2 className="mt-0 mb-3 font-extrabold">About Me</H2>
+            <H2 className="mb-3 mt-0 font-extrabold">About Me</H2>
             <Text>
               I was born in 1997 in Marcq-En-Baroeul, France. After seing my
               uncle typing some characters on his computer and make a website, I
@@ -42,8 +43,8 @@ const AboutPage: NextPageWithLayout = () => {
               practicing on this website and social media.
             </Text>
           </div>
-          <div className="col-span-8 rounded-2xl bg-brand-50 p-4 animate-in fade-in slide-in-from-right-8 dark:bg-brand-400/10 lg:col-span-3">
-            <H2 className="mt-0 mb-3 font-extrabold">Work Experiences</H2>
+          <Card className="col-span-8 rounded-2xl bg-gradient-to-b from-brand-50 to-neutral-50 p-4 animate-in fade-in slide-in-from-right-8 dark:from-brand-950 dark:to-neutral-800 lg:col-span-3">
+            <H2 className="mb-3 mt-0 font-extrabold">Work Experiences</H2>
             <div className="flex flex-col gap-3">
               <div className="flex rounded-xl bg-white p-3 dark:bg-zinc-900">
                 <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-yellow-200">
@@ -97,7 +98,7 @@ const AboutPage: NextPageWithLayout = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </Card>
         </div>
       </div>
     </>

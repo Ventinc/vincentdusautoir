@@ -43,7 +43,7 @@ module.exports = {
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
-        "spotify-tracks": "spotify-tracks 60s linear infinite",
+        "spotify-tracks": "spotify-tracks 90s linear infinite",
       },
       gridTemplateColumns: {
         blog: "[full-start] minmax(max(4vmin,20px),auto) [wide-start] minmax(auto,240px) [main-start] min(720px,calc(100% - max(8vmin, 40px))) [main-end] minmax(auto,240px) [wide-end] minmax(max(4vmin,20px),auto) [full-end]",

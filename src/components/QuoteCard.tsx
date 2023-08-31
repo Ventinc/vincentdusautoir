@@ -9,7 +9,7 @@ export const QuoteCard = () => {
   });
 
   return (
-    <Card className="relative bg-emerald-50 p-8 animate-in  fade-in slide-in-from-right-8 dark:bg-emerald-600/20">
+    <Card className="relative bg-emerald-50 p-8 animate-in fade-in slide-in-from-right-8 dark:bg-emerald-600/20">
       <blockquote className="flex flex-col justify-center">
         {quote ? (
           <>
