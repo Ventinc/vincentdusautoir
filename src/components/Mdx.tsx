@@ -37,7 +37,7 @@ const components = {
     <blockquote
       className={cn(
         "mt-6 border-l-2 border-zinc-300 pl-6 italic text-zinc-800 dark:border-zinc-700 dark:text-zinc-500 [&>*]:text-zinc-600 dark:[&>*]:text-zinc-300",
-        className
+        className,
       )}
       {...props}
     />
@@ -51,7 +51,7 @@ const components = {
     <img
       className={cn(
         "rounded-md border border-zinc-200 dark:border-zinc-700",
-        className
+        className,
       )}
       alt={alt}
       {...props}
@@ -69,7 +69,7 @@ const components = {
     <tr
       className={cn(
         "m-0 border-t border-zinc-300 p-0 even:bg-zinc-100 dark:border-zinc-700 dark:even:bg-zinc-800",
-        className
+        className,
       )}
       {...props}
     />
@@ -78,7 +78,7 @@ const components = {
     <th
       className={cn(
         "border border-zinc-200 px-4 py-2 text-left font-bold dark:border-zinc-700 [&[align=center]]:text-center [&[align=right]]:text-right",
-        className
+        className,
       )}
       {...props}
     />
@@ -87,7 +87,7 @@ const components = {
     <td
       className={cn(
         "border border-zinc-200 px-4 py-2 text-left dark:border-zinc-700 [&[align=center]]:text-center [&[align=right]]:text-right",
-        className
+        className,
       )}
       {...props}
     />
@@ -95,8 +95,8 @@ const components = {
   pre: ({ className, ...props }: React.ComponentPropsWithoutRef<"pre">) => (
     <pre
       className={cn(
-        "relative mt-6 mb-4 overflow-x-auto rounded-lg bg-zinc-900 py-4 before:absolute before:top-1 before:left-1 before:text-xs before:text-zinc-500 before:content-[attr(data-language)] before:animate-in before:fade-in before:slide-in-from-top-8 hover:before:block dark:bg-zinc-800 lg:before:hidden",
-        className
+        "relative mb-4 mt-6 overflow-x-auto rounded-lg bg-zinc-900 p-4 before:absolute before:left-1 before:top-1 before:text-xs before:text-zinc-500 before:content-[attr(data-language)] before:animate-in before:fade-in before:slide-in-from-top-8 hover:before:block dark:bg-zinc-800 lg:before:hidden",
+        className,
       )}
       {...props}
     />
@@ -104,8 +104,8 @@ const components = {
   code: ({ className, ...props }: React.ComponentPropsWithoutRef<"code">) => (
     <code
       className={cn(
-        "relative rounded border bg-zinc-300 bg-opacity-25 py-[0.2rem] px-[0.3rem] font-mono text-sm text-zinc-600 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300",
-        className
+        "relative rounded border bg-zinc-300 bg-opacity-25 px-[0.3rem] py-[0.2rem] font-mono text-sm text-zinc-600 dark:border-zinc-600 dark:bg-zinc-700 dark:text-zinc-300",
+        className,
       )}
       {...props}
     />
