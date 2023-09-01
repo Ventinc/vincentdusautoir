@@ -16,7 +16,7 @@ export const Header = () => {
     <div className="container pointer-events-none sticky top-2 z-50 my-4 flex justify-center md:top-6 md:my-12">
       <div className="pointer-events-auto flex flex-1 gap-4 rounded-full bg-white/40 backdrop-blur-sm dark:bg-zinc-900/40 md:flex-none">
         <Avatar
-          className="hidden h-12 w-12 cursor-pointer rounded-full border-2 border-zinc-200 bg-white p-1 text-zinc-700 transition-all duration-150 hover:scale-105 hover:border-brand-200 hover:text-brand-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-brand-400/30 dark:hover:text-brand-300 md:block"
+          className="hidden h-12 w-12 cursor-pointer rounded-full border-2 border-zinc-200 bg-white p-1 text-zinc-700 transition-colors duration-75 hover:scale-105 hover:border-brand-200 hover:text-brand-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-brand-400/30 dark:hover:text-brand-300 md:block"
           asChild
         >
           <Link href="/">
@@ -38,9 +38,9 @@ export const Header = () => {
                 key={navLink.href}
                 href={navLink.href}
                 className={cn(
-                  "cursor-pointer rounded-full px-3 py-1 text-lg font-medium text-zinc-700 transition-all duration-150 hover:bg-brand-500/30 hover:text-brand-800 dark:text-zinc-50 dark:hover:text-brand-300",
+                  "cursor-pointer rounded-full px-3 py-1 text-lg font-medium text-zinc-700 transition-all duration-150 hover:bg-brand-300/50 hover:text-brand-800 dark:text-white dark:hover:bg-brand-800/60 dark:hover:text-brand-200",
                   {
-                    "bg-brand-500/40 text-brand-800 dark:text-brand-300":
+                    "bg-brand-300/40 text-brand-800 dark:bg-brand-800/40 dark:text-brand-200":
                       router.pathname.includes(navLink.href),
                   },
                 )}
@@ -53,7 +53,7 @@ export const Header = () => {
         <div>
           <IconButton
             variant="unstyled"
-            className="hidden h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 border-zinc-200 bg-white p-1 text-zinc-700 transition-all duration-150 hover:scale-105 hover:border-brand-200 hover:text-brand-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-brand-400/30 dark:hover:text-brand-300 md:flex"
+            className="hidden h-12 w-12 cursor-pointer items-center justify-center rounded-full border-2 border-zinc-200 bg-white p-1 text-zinc-700 transition-colors duration-75 hover:scale-105 hover:border-brand-200 hover:text-brand-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:border-brand-400/30 dark:hover:text-brand-300 md:flex"
             onClick={toggleTheme}
           >
             <Sun className="dark:hidden" />{" "}
