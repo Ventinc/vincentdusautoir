@@ -10,10 +10,10 @@ export const baseButtonVariants = cva(
     variants: {
       size: {
         xs: "text-xs h-6 min-w-6 px-2",
-        sm: "text-sm h-8 min-w-8 px-4",
-        md: "text-base h-10 min-w-10 px-6",
-        lg: "text-lg h-12 min-w-12 px-8",
-        xl: "text-xl h-14 min-w-14 px-10",
+        sm: "text-sm h-8 min-w-8 px-3",
+        md: "text-base h-10 min-w-10 px-4",
+        lg: "text-lg h-12 min-w-12 px-6",
+        xl: "text-xl h-14 min-w-14 px-8",
       },
       rounded: {
         none: "rounded-none",
@@ -25,7 +25,7 @@ export const baseButtonVariants = cva(
       size: "md",
       rounded: "md",
     },
-  }
+  },
 );
 
 export type BaseButtonProps = ComponentPropsWithoutRef<"button"> &
@@ -50,7 +50,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
       asChild,
       ...props
     },
-    ref
+    ref,
   ) => {
     const Comp = (asChild ? Slot : "button") as "button";
 
@@ -79,7 +79,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
           <span
             className={cn(
               { "mr-2": !!children },
-              "inline-flex shrink-0 self-center"
+              "inline-flex shrink-0 self-center",
             )}
           >
             {icon}
@@ -90,7 +90,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
           <span
             className={cn(
               { "ml-2": !!children },
-              "inline-flex shrink-0 self-center"
+              "inline-flex shrink-0 self-center",
             )}
           >
             {icon}
@@ -98,7 +98,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
         ) : null}
       </Comp>
     );
-  }
+  },
 );
 
 BaseButton.displayName = "BaseButton";

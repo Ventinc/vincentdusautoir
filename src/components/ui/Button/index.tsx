@@ -54,7 +54,7 @@ const ghostVariants = cva("", {
 });
 
 export const buttonVariants = cva(
-  "focus:ring-2 focus:ring-zinc-300 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-zinc-600 disabled:pointer-events-none dark:focus:ring-offset-zinc-900 transition-all duration-150 active:scale-95",
+  "focus:ring-2 focus:ring-zinc-300 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-zinc-600 disabled:pointer-events-none dark:focus:ring-offset-zinc-900 active:translate-y-[0.0625rem]",
   {
     variants: {
       variant: {
@@ -78,7 +78,7 @@ export const buttonVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 export const Button = React.forwardRef<
