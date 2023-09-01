@@ -62,7 +62,7 @@ const ghostVariants = cva("", {
 });
 
 export const buttonVariants = cva(
-  "focus-visible:ring-2 focus-visible:ring-neutral-300 focus-visible:ring-offset-2 disabled:opacity-50 dark:focus:ring-neutral-600 disabled:cursor-not-allowed dark:focus-visible:ring-offset-neutral-900 dark:focus-visible:ring-neutral-600 active:translate-y-[0.0625rem] disabled:active:translate-y-0 cursor-pointer",
+  "focus-visible:ring-2 focus-visible:ring-neutral-300 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed dark:focus-visible:ring-offset-neutral-900 dark:focus-visible:ring-neutral-600 active:translate-y-[0.0625rem] disabled:active:translate-y-0 cursor-pointer",
   {
     variants: {
       variant: {
