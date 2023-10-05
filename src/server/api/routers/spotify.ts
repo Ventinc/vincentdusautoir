@@ -1,20 +1,20 @@
-import { getPlaiceholder } from "plaiceholder";
+// import { getPlaiceholder } from "plaiceholder";
 import { z } from "zod";
 import { getNowPlaying, getTopTracks } from "../external/spotify";
 
 import { createTRPCRouter, spotifyProcedure } from "../trpc";
 
-const getImageBlur = async (imageUrl?: string) => {
-  if (!imageUrl) return imageUrl;
+// const getImageBlur = async (imageUrl?: string) => {
+//   if (!imageUrl) return imageUrl;
 
-  const buffer = await fetch(imageUrl).then(async (res) =>
-    Buffer.from(await res.arrayBuffer()),
-  );
+//   const buffer = await fetch(imageUrl).then(async (res) =>
+//     Buffer.from(await res.arrayBuffer()),
+//   );
 
-  const { base64 } = await getPlaiceholder(buffer);
+//   const { base64 } = await getPlaiceholder(buffer);
 
-  return base64;
-};
+//   return base64;
+// };
 
 export const spotifyRouter = createTRPCRouter({
   nowPlaying: spotifyProcedure.query(async ({ ctx }) => {
@@ -33,14 +33,13 @@ export const spotifyRouter = createTRPCRouter({
     }
 
     const image = data.item.album.images[0]?.url;
-    const imageBlur = await getImageBlur(image);
+    // const imageBlur = await getImageBlur(image);
 
     return {
       isPlaying: data.is_playing,
       title: data.item.name,
       artist: data.item.artists.map((artist) => artist.name).join(", "),
       image,
-      imageBlur,
       songUrl: data.item.external_urls.spotify,
     };
   }),
@@ -59,16 +58,14 @@ export const spotifyRouter = createTRPCRouter({
       const data = (await res.json()) as SpotifyApi.UsersTopTracksResponse;
 
       const tracks = await Promise.all(
-        data.items.slice(0, count).map(async (item) => {
+        data.items.slice(0, count).map((item) => {
           const image = item.album.images[0]?.url;
-          const imageBlur = await getImageBlur(image);
 
           return {
             artist: item.artists.map((artist) => artist.name).join(", "),
             songUrl: item.external_urls.spotify,
             title: item.name,
             image,
-            imageBlur,
           };
         }),
       );

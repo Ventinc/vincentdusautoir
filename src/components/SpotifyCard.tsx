@@ -22,8 +22,6 @@ const SpotifyAlbum = ({ track }: { track: Track }) => {
           src={track.image ?? ""}
           alt={track.title}
           sizes="400px"
-          placeholder="blur"
-          blurDataURL={track.imageBlur}
           fill
           className=" bg-zinc-600 object-cover filter transition-all duration-200 group-hover:scale-110"
         />
@@ -90,8 +88,6 @@ export const SpotifyCard = () => {
                     <Image
                       src={nowPlaying.image ?? ""}
                       alt={nowPlaying.title ?? "Now playing on my spotify"}
-                      blurDataURL={nowPlaying.imageBlur}
-                      placeholder="blur"
                       fill
                       sizes="200px"
                       className="object-cover"
@@ -116,7 +112,7 @@ export const SpotifyCard = () => {
           </Tooltip>
         ) : null}
       </div>
-      <div className="animate-spotify-tracks my-14 flex w-[calc((300px+2rem)*20)] gap-8">
+      <div className="my-14 flex w-[calc((300px+2rem)*20)] animate-spotify-tracks gap-8">
         {!topTracks ? skeletonTracks : null}
         {topTracks
           ? [...topTracks.tracks, ...topTracks.tracks].map((track) => (
