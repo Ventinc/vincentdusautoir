@@ -19,6 +19,6 @@
     @apply border-neutral-200;
   }
   body {
-    @apply bg-white font-sans text-neutral-800;
+    @apply min-h-screen bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-900 dark:text-zinc-50;
   }
 }
