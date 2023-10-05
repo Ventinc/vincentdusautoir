@@ -1,6 +1,5 @@
 // @ts-check
 import { withContentlayer } from "next-contentlayer";
-import withPlaiceholder from "@plaiceholder/next";
 
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
@@ -25,4 +24,4 @@ const config = {
   },
 };
 
-export default withPlaiceholder(withContentlayer(config));
+export default withContentlayer(config);
