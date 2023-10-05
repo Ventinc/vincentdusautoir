@@ -7,6 +7,7 @@ import { codeImport as remarkCodeImport } from "remark-code-import";
 import path from "path";
 import { rehypeComponentFileSource } from "./src/utils/rehype";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeExternalLinks from "rehype-external-links";
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -83,11 +84,17 @@ export default makeSource({
       rehypeSlug,
       rehypeComponentFileSource,
       [
+        rehypeExternalLinks,
+        {
+          target: "_blank",
+        },
+      ],
+      [
         rehypePrettyCode,
         {
           getHighlighter: async () => {
             const theme = await loadTheme(
-              path.join(process.cwd(), "src/styles/code-theme.json")
+              path.join(process.cwd(), "src/styles/code-theme.json"),
             );
             return await getHighlighter({ theme });
           },

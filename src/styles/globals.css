@@ -13,3 +13,12 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@layer base {
+  * {
+    @apply border-neutral-200;
+  }
+  body {
+    @apply bg-white font-sans text-neutral-800;
+  }
+}

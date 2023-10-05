@@ -21,6 +21,10 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
+        display: [
+          "var(--font-bricolage-grotesque)",
+          ...defaultTheme.fontFamily.serif,
+        ],
       },
       minWidth: {
         ...defaultTheme.spacing,
@@ -58,7 +62,6 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
-    require("@tailwindcss/line-clamp"),
     require("@tailwindcss/aspect-ratio"),
     require("tailwindcss-animate"),
   ],

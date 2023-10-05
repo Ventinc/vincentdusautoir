@@ -1,5 +1,5 @@
 import { type AppProps, type AppType } from "next/app";
-import { Inter as FontSans } from "next/font/google";
+import { Bricolage_Grotesque, Inter as FontSans } from "next/font/google";
 
 import { api } from "../utils/api";
 
@@ -12,10 +12,19 @@ import { seoConfig } from "@/config/seo";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { TooltipProvider } from "@/components/ui/Tooltip";
+import { ConfirmDialogProvider } from "@/components/ui/ConfirmDialog";
+import { Toaster } from "@/components/ui/Toaster";
 
 const fontSans = FontSans({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-inter",
+});
+
+export const bricolageGrotesqueFont = Bricolage_Grotesque({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-bricolage-grotesque",
 });
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,13 +42,22 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <TooltipProvider>
-          <DefaultSeo {...seoConfig} />
-          <main className={cn(fontSans.variable, "font-sans")}>
-            {getLayout(<Component {...pageProps} />)}
-          </main>
-          <Devtools />
-        </TooltipProvider>
+        <DefaultSeo {...seoConfig} />
+        <main
+          className={cn(
+            fontSans.variable,
+            bricolageGrotesqueFont.variable,
+            "font-sans",
+          )}
+        >
+          <TooltipProvider>
+            <ConfirmDialogProvider>
+              {getLayout(<Component {...pageProps} />)}
+              <Toaster />
+            </ConfirmDialogProvider>
+            <Devtools />
+          </TooltipProvider>
+        </main>
       </ThemeProvider>
       <Analytics />
     </>
