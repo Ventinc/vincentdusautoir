@@ -10,10 +10,10 @@ import { cn } from "@/utils/tailwind";
 import { DefaultSeo } from "next-seo";
 import { seoConfig } from "@/config/seo";
 import { ThemeProvider } from "next-themes";
-import { Analytics } from "@vercel/analytics/react";
 import { TooltipProvider } from "@/components/ui/Tooltip";
 import { ConfirmDialogProvider } from "@/components/ui/ConfirmDialog";
 import { Toaster } from "@/components/ui/Toaster";
+import { Analytics } from "@/components/Analytics";
 
 const fontSans = FontSans({
   subsets: ["latin"],
