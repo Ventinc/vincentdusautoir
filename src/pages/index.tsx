@@ -118,7 +118,7 @@ const HomePage: NextPageWithLayout<
             {projects.map((project) => (
               <Link
                 key={project.name}
-                href={project.href}
+                href={`${project.href}?ref=vincentdusautoir`}
                 target="_blank"
                 unstyled
               >
