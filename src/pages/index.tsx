@@ -4,6 +4,7 @@ import { SpotifyCard } from "@/components/SpotifyCard";
 import { DefaultLayout } from "@/components/layouts/DefaultLayout";
 import { Button, IconButton } from "@/components/ui/Button";
 import { H1, H2, Link, Text } from "@/components/ui/Typography";
+import { projects } from "@/config/projects";
 import { siteConfig } from "@/config/site";
 import { appRouter } from "@/server/api/root";
 import { createInnerTRPCContext } from "@/server/api/trpc";
@@ -111,19 +112,36 @@ const HomePage: NextPageWithLayout<
             </div>
           </div>
         </Card>
-        {/* <Card className="relative order-first col-span-full flex w-[150px] place-self-start overflow-hidden rounded-2xl p-2 transition-all duration-200 animate-in fade-in slide-in-from-right-8 md:order-none md:col-span-3 md:w-auto md:place-self-auto md:hover:rotate-3 lg:col-span-2">
-          <AspectRatio ratio={1}>
-            <Image
-              className="rounded-xl object-cover"
-              src={siteConfig.myself}
-              sizes="20vw"
-              priority
-              fill
-              alt="Vincent Dusautoir"
-            />
-          </AspectRatio>
-        </Card> */}
-        <div className="col-span-full row-span-2 animate-in fade-in slide-in-from-left-8 lg:col-span-5">
+        <div className="col-span-full animate-in fade-in slide-in-from-left-8 sm:col-span-4 lg:col-span-3">
+          <H2 className="mb-2 mt-0 px-8 font-extrabold">Projects</H2>
+          <div className="flex flex-col gap-4">
+            {projects.map((project) => (
+              <Link
+                key={project.name}
+                href={project.href}
+                target="_blank"
+                unstyled
+              >
+                <Card className="flex flex-row items-center justify-center gap-2.5 p-2.5 transition-shadow hover:shadow-md dark:bg-neutral-800 dark:shadow-white/10">
+                  <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-500">
+                    <Image
+                      src={`/images/projects/${project.icon}`}
+                      alt="SculptEmail Icon"
+                      fill
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold">{project.name}</p>
+                    <p className="line-clamp-2 text-sm">
+                      {project.description}
+                    </p>
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <div className="col-span-full animate-in fade-in slide-in-from-right-8 lg:col-span-5">
           <H2 className="mb-2 mt-0 px-8 font-extrabold">Latest posts</H2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {latestPosts.map((post) => {
@@ -163,6 +181,9 @@ const HomePage: NextPageWithLayout<
             })}
           </div>
         </div>
+        <div className="col-span-full lg:col-span-5 lg:row-span-2">
+          <SpotifyCard />
+        </div>
         <Card className="aspect-video relative col-span-full flex min-h-[200px] flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl bg-cyan-50 p-0 animate-in fade-in slide-in-from-right-8 dark:bg-cyan-600/20 sm:col-span-4 lg:col-span-3">
           <Image
             src="/images/lille-map.png"
@@ -180,9 +201,6 @@ const HomePage: NextPageWithLayout<
         </Card>
         <div className="col-span-full sm:col-span-4 lg:col-span-3">
           <QuoteCard />
-        </div>
-        <div className="col-span-full">
-          <SpotifyCard />
         </div>
       </main>
     </>

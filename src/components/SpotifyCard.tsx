@@ -63,7 +63,7 @@ export const SpotifyCard = () => {
     .map((x, idx) => <SpotifyAlbumSkeleton key={idx} />);
 
   return (
-    <Card className="relative overflow-hidden rounded-2xl bg-neutral-800 p-6 transition-all duration-200 animate-in slide-in-from-bottom-8">
+    <Card className="relative overflow-hidden rounded-2xl bg-neutral-800 p-6 transition-all duration-200 animate-in slide-in-from-left-8">
       <div className="pointer-events-none absolute inset-0 z-10">
         <div className="absolute left-0 top-0 h-full w-[10%] bg-gradient-to-r from-neutral-800 to-neutral-800/0"></div>
         <div className="absolute bottom-0 right-0 h-full w-[10%] bg-gradient-to-l from-neutral-800 to-neutral-800/0"></div>
