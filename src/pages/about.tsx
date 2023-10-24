@@ -16,7 +16,7 @@ const AboutPage: NextPageWithLayout = () => {
       <div className="container">
         <PageTitle
           title="Vincent Dusautoir"
-          description="A developer, that love to travel and taking pictures"
+          description="A developer, that love to travel and take pictures"
           type="About"
         />
 
