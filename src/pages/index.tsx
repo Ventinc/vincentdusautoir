@@ -186,13 +186,13 @@ const HomePage: NextPageWithLayout<
         </div>
         <Card className="aspect-video relative col-span-full flex min-h-[200px] flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl bg-cyan-50 p-0 animate-in fade-in slide-in-from-right-8 dark:bg-cyan-600/20 sm:col-span-4 lg:col-span-3">
           <Image
-            src="/images/lille-map.png"
+            src="/images/montreal-map.png"
             alt="Current location"
             fill
             className="overflow-hidden object-cover"
           />
           <Text className="absolute bottom-2 left-2 z-10 m-0 rounded-xl bg-white/40 px-2 font-bold tracking-wide backdrop-blur-sm dark:bg-neutral-900/40">
-            Lille, France
+            Montreal, QC, Canada
           </Text>
           <span className="relative z-10 h-6 w-6">
             <span className="absolute inset-0 animate-ping rounded-full bg-brand-400 dark:bg-brand-500"></span>
