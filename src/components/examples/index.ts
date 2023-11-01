@@ -7,6 +7,9 @@ import { GithubCard } from "./github-card/result";
 import { GithubCardDesign } from "./github-card/design";
 import { ConfirmVanilla } from "./confirm/vanilla";
 import { ConfirmHook } from "./confirm/hook";
+import { DefaultIconExample } from "./svg-icon/default-example";
+import { SlotIconExample } from "./svg-icon/slot-example";
+import { CreateIconIconExample } from "./svg-icon/create-icon-example";
 
 const examples = {
   ButtonsUnstyled,
@@ -18,6 +21,9 @@ const examples = {
   GithubCardDesign,
   ConfirmVanilla,
   ConfirmHook,
+  DefaultIconExample,
+  SlotIconExample,
+  CreateIconIconExample,
 };
 
 export default examples;
