@@ -40,7 +40,7 @@ const AboutPage: NextPageWithLayout = () => {
             </Text>
             <Text>
               My main language is 🇫🇷 but I want to be better at 🇬🇧 so I learn by
-              practicing on this website and social media.
+              practicing on this website.
             </Text>
           </div>
           <Card className="col-span-8 rounded-2xl bg-gradient-to-b from-brand-50 to-neutral-50 p-4 animate-in fade-in slide-in-from-right-8 dark:from-brand-950 dark:to-neutral-800 lg:col-span-3">
