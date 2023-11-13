@@ -114,7 +114,7 @@ export const SpotifyCard = () => {
           <div className="absolute left-0 top-0 h-full w-[10%] bg-gradient-to-r from-neutral-800 to-neutral-800/0"></div>
           <div className="absolute bottom-0 right-0 h-full w-[10%] bg-gradient-to-l from-neutral-800 to-neutral-800/0"></div>
         </div>
-        <Marquee className="my-14 [--duration:90s] [--gap:2rem]" pauseOnHover>
+        <Marquee className="my-14" duration="90s" gap="2rem" pauseOnHover>
           {!topTracks ? skeletonTracks : null}
           {topTracks
             ? topTracks.tracks.map((track, idx) => (
