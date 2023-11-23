@@ -1,4 +1,9 @@
 "use client";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
+import { Disc3Icon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { SiSpotify } from "react-icons/si";
 import { Card } from "~/components/card";
 import { Marquee } from "~/components/ui/marquee";
 import {
@@ -8,11 +13,6 @@ import {
 } from "~/components/ui/tooltip";
 import type { RouterOutput } from "~/server/api/trpc";
 import { api } from "~/utils/api";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import { Disc3Icon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { SiSpotify } from "react-icons/si";
 
 type Track = RouterOutput["spotify"]["topTracks"]["tracks"][0];
 
