@@ -1,17 +1,19 @@
-import { siteConfig } from "@/config/site";
-import { useToggleTheme } from "@/hooks/useToggleTheme";
+"use client";
+
+import { siteConfig } from "~/config/site";
+import { useToggleTheme } from "~/hooks/use-toggle-theme";
 import Image from "next/image";
 import { TbMoonStars, TbRss, TbSun } from "react-icons/tb";
-import { Button, IconButton } from "./ui/Button";
-import { H4, Link } from "./ui/Typography";
+import { Button, IconButton } from "./ui/button";
+import { H4, Link } from "./ui/typography";
 import NextLink from "next/link";
 
 export const Footer = () => {
   const toggleTheme = useToggleTheme();
 
   return (
-    <div className="container mt-4 mb-8">
-      <div className="grid grid-cols-1 gap-3 rounded-2xl border-2 border-zinc-200 bg-white p-2 transition-all animate-in fade-in slide-out-to-bottom-8 duration-150 hover:border-brand-200 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-purple-400/30 md:grid-cols-2 lg:grid-cols-4">
+    <div className="container mb-8 mt-4">
+      <div className="grid grid-cols-1 gap-3 rounded-2xl border-2 border-zinc-200 bg-white p-2 transition-all duration-150 animate-in fade-in slide-out-to-bottom-8 hover:border-brand-200 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-purple-400/30 md:grid-cols-2 lg:grid-cols-4">
         <div className="col-span-1 rounded-xl bg-yellow-50 p-3 animate-in slide-in-from-bottom-8 dark:bg-yellow-100/20">
           <div className="mb-3 flex items-center justify-start gap-2">
             <Image

@@ -1,33 +1,20 @@
-import { DefaultLayout } from "@/components/layouts/DefaultLayout";
-import { PageTitle } from "@/components/PageTitle";
-import { AspectRatio } from "@/components/ui/AspectRatio";
-import { Post } from "@/utils/content";
 import { format } from "date-fns";
-import { type InferGetStaticPropsType } from "next";
-import { NextSeo } from "next-seo";
 import Image from "next/image";
 import Link from "next/link";
-import { type NextPageWithLayout } from "../_app";
-import { H2 } from "@/components/ui/Typography";
+import { PageTitle } from "~/components/page-title";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
+import { H2 } from "~/components/ui/typography";
+import { Post } from "~/utils/content";
 
-export function getStaticProps() {
-  const posts = Post.getAll().map((post) => ({
-    ...post,
-    body: null,
-  }));
+const BlogPage = () => {
+  const posts = Post.getAll();
 
-  return { props: { posts } };
-}
-
-const BlogPage: NextPageWithLayout<
-  InferGetStaticPropsType<typeof getStaticProps>
-> = ({ posts }) => {
   return (
     <>
-      <NextSeo
+      {/* <NextSeo
         title="Posts"
         description="Ideas, stories, and things that I want to share."
-      />
+      /> */}
       <main className="container">
         <PageTitle
           title="Posts"
@@ -79,7 +66,5 @@ const BlogPage: NextPageWithLayout<
     </>
   );
 };
-
-BlogPage.getLayout = (page) => <DefaultLayout>{page}</DefaultLayout>;
 
 export default BlogPage;

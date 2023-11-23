@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 import type { ReactNode } from "react";
 
 export const Card = ({

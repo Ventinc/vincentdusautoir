@@ -1,4 +1,4 @@
-import { TailwindIndicator } from "./TailwindIndicator";
+import { TailwindIndicator } from "./tailwind-indicator";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const Devtools = () => {

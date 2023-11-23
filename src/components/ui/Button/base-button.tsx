@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 import { cva, type VariantProps } from "class-variance-authority";
 import React, { type ComponentPropsWithoutRef, useMemo } from "react";
 import { TbLoader } from "react-icons/tb";

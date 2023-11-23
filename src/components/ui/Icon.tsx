@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import React, { Children } from "react";
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 
 export type IconProps = React.ComponentPropsWithoutRef<"svg"> & {
   asChild?: boolean;

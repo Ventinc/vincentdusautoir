@@ -1,15 +1,17 @@
-import { IconButton } from "@/components/ui/Button";
-import { navigationConfig } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
-import { useToggleTheme } from "@/hooks/useToggleTheme";
-import { cn } from "@/utils/tailwind";
-import { Avatar, AvatarFallback, AvatarImage } from "@ui/Avatar";
+"use client";
+
+import { IconButton } from "~/components/ui/button";
+import { navigationConfig } from "~/config/navigation";
+import { siteConfig } from "~/config/site";
+import { useToggleTheme } from "~/hooks/use-toggle-theme";
+import { cn } from "~/utils/tailwind";
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
 export const Header = () => {
-  const router = useRouter();
+  const pathname = usePathname();
   const toggleTheme = useToggleTheme();
 
   return (
@@ -41,7 +43,7 @@ export const Header = () => {
                   "cursor-pointer rounded-full px-3 py-1 text-lg font-medium text-zinc-700 transition-all duration-150 hover:bg-brand-300/50 hover:text-brand-800 dark:text-white dark:hover:bg-brand-800/60 dark:hover:text-brand-200",
                   {
                     "bg-brand-300/40 text-brand-800 dark:bg-brand-800/40 dark:text-brand-200":
-                      router.pathname.includes(navLink.href),
+                      pathname?.includes(navLink.href),
                   },
                 )}
               >

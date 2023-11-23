@@ -1,6 +1,6 @@
-import { buttonVariants } from "@/components/ui/Button";
-import { baseButtonVariants } from "@/components/ui/Button/BaseButton";
-import { cn } from "@/utils/tailwind";
+import { buttonVariants } from "~/components/ui/button";
+import { baseButtonVariants } from "~/components/ui/button/base-button";
+import { cn } from "~/utils/tailwind";
 
 const Buttons: React.FC<{ className?: string }> = ({ className }) => {
   return (

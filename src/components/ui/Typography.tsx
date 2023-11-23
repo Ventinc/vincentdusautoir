@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 import NextLink from "next/link";
 
 export const H1 = ({
@@ -7,7 +7,7 @@ export const H1 = ({
 }: React.ComponentPropsWithoutRef<"h1">) => (
   <h1
     className={cn(
-      "font-display mt-2 scroll-m-20 text-3xl font-bold tracking-tight md:text-4xl",
+      "mt-2 scroll-m-20 font-display text-3xl font-bold tracking-tight md:text-4xl",
       className,
     )}
     {...props}
@@ -20,7 +20,7 @@ export const H2 = ({
 }: React.ComponentPropsWithoutRef<"h2">) => (
   <h2
     className={cn(
-      "font-display mt-10 scroll-m-20 pb-1 text-2xl font-semibold tracking-tight first:mt-0 md:text-3xl",
+      "mt-10 scroll-m-20 pb-1 font-display text-2xl font-semibold tracking-tight first:mt-0 md:text-3xl",
       className,
     )}
     {...props}
@@ -33,7 +33,7 @@ export const H3 = ({
 }: React.ComponentPropsWithoutRef<"h3">) => (
   <h3
     className={cn(
-      "font-display mt-8 scroll-m-20 text-xl font-semibold tracking-tight md:text-2xl",
+      "mt-8 scroll-m-20 font-display text-xl font-semibold tracking-tight md:text-2xl",
       className,
     )}
     {...props}
@@ -46,7 +46,7 @@ export const H4 = ({
 }: React.ComponentPropsWithoutRef<"h4">) => (
   <h4
     className={cn(
-      "font-display mt-8 scroll-m-20 text-lg font-semibold tracking-tight md:text-xl",
+      "mt-8 scroll-m-20 font-display text-lg font-semibold tracking-tight md:text-xl",
       className,
     )}
     {...props}
@@ -59,7 +59,7 @@ export const H5 = ({
 }: React.ComponentPropsWithoutRef<"h5">) => (
   <h5
     className={cn(
-      "font-display mt-8 scroll-m-20 text-base font-semibold tracking-tight md:text-lg",
+      "mt-8 scroll-m-20 font-display text-base font-semibold tracking-tight md:text-lg",
       className,
     )}
     {...props}
@@ -72,7 +72,7 @@ export const H6 = ({
 }: React.ComponentPropsWithoutRef<"h6">) => (
   <h6
     className={cn(
-      "font-display mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+      "mt-8 scroll-m-20 font-display text-base font-semibold tracking-tight",
       className,
     )}
     {...props}

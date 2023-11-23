@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/Button";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
-import { toast } from "@/hooks/useToast";
+import { Button } from "~/components/ui/button";
+import { useConfirm } from "~/components/ui/confirm-dialog";
+import { toast } from "~/hooks/use-toast";
 
 export const ConfirmHook = () => {
   const confirm = useConfirm();

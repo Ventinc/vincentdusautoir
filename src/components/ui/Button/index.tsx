@@ -1,7 +1,7 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
-import { BaseButton } from "./BaseButton";
+import { BaseButton } from "./base-button";
 
 const solidVariants = cva("hover:bg-opacity-90 dark:hover:bg-opacity-90", {
   variants: {

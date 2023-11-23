@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 
 interface CalloutProps {
   icon?: string;
@@ -26,7 +26,7 @@ export function Callout({
           "border-yellow-200 from-yellow-100 to-yellow-50 dark:border-yellow-500 dark:from-yellow-500/30 dark:to-yellow-500/10":
             type === "warning",
         },
-        className
+        className,
       )}
       {...props}
     >

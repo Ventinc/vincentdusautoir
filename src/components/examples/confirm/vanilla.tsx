@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/Button";
-import { toast } from "@/hooks/useToast";
+import { Button } from "~/components/ui/button";
+import { toast } from "~/hooks/use-toast";
 
 export const ConfirmVanilla = () => {
   const onClick = () => {

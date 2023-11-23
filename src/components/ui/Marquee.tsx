@@ -1,4 +1,5 @@
-import { cn } from "@/utils/tailwind";
+"use client";
+import { cn } from "~/utils/tailwind";
 import React, { type CSSProperties, type ReactNode } from "react";
 
 export const Marquee = ({

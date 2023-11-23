@@ -1,11 +1,12 @@
-import { cn } from "@/utils/tailwind";
+"use client";
+import { cn } from "~/utils/tailwind";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Image from "next/image";
 import * as React from "react";
-import { Callout } from "./Callout";
-import { ComponentExample } from "./ComponentExample";
+import { Callout } from "./callout";
+import { ComponentExample } from "./component-example";
 import examples from "./examples";
-import { H1, H2, H3, H4, H5, H6, Text } from "./ui/Typography";
+import { H1, H2, H3, H4, H5, H6, Text } from "./ui/typography";
 
 const components = {
   h1: H1,

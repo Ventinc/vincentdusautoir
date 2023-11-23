@@ -1,61 +1,95 @@
-import { DefaultLayout } from "@/components/layouts/DefaultLayout";
-import { Mdx } from "@/components/Mdx";
-import { AspectRatio } from "@/components/ui/AspectRatio";
-import { IconButton } from "@/components/ui/Button";
-import { H1, Link } from "@/components/ui/Typography";
-import { siteConfig } from "@/config/site";
-import { env } from "@/env/client.mjs";
-import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import { type NextPageWithLayout } from "@/pages/_app";
-import { Post } from "@/utils/content";
 import { format, parseISO } from "date-fns";
-import { type GetStaticPropsContext, type InferGetStaticPropsType } from "next";
-import { NextSeo } from "next-seo";
+import type { Metadata } from "next";
 import Image from "next/image";
-import { SiTwitter } from "react-icons/si";
-import { TbCheck, TbCopy } from "react-icons/tb";
 import NextLink from "next/link";
+import { notFound } from "next/navigation";
+import { SiTwitter } from "react-icons/si";
+import { ShareCopyButton } from "~/app/posts/[...slug]/_component/share-copy-button";
+import { Mdx } from "~/components/mdx";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
+import { IconButton } from "~/components/ui/button";
+import { H1, Link } from "~/components/ui/typography";
+import { siteConfig } from "~/config/site";
+import { env } from "~/env/client.mjs";
+import { Post } from "~/utils/content";
+import { absoluteUrl } from "~/utils/url";
 
-export function getStaticPaths() {
-  const paths = Post.getAll().map((post) => ({
-    params: {
-      slug: post.slugAsParams.split("/"),
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
+interface PostPageProps {
+  params: {
+    slug: string[];
   };
 }
 
-export function getStaticProps({
-  params,
-}: GetStaticPropsContext<{ slug: string[] }>) {
-  const slug = params?.slug.join("/") ?? "";
+// eslint-disable-next-line @typescript-eslint/require-await
+async function getPostFromParams(params: PostPageProps["params"]) {
+  const slug = params?.slug?.join("/");
   const post = Post.getAll().find((post) => post.slugAsParams === slug);
 
   if (!post) {
-    return {
-      notFound: true,
-    };
+    null;
   }
 
+  return post;
+}
+
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
+  const post = await getPostFromParams(params);
+
+  if (!post) {
+    return {};
+  }
+
+  const ogUrl = absoluteUrl(post.image);
+
   return {
-    props: {
-      post,
+    title: post.title,
+    description: post.description,
+    authors: [
+      { name: "Vincent Dusautoir", url: "https://twitter.com/vincent_dstr" },
+    ],
+    publisher: "Vincent Dusautoir",
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      url: absoluteUrl(post.slug),
+      images: [
+        {
+          url: ogUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [ogUrl],
     },
   };
 }
 
-const PostPage: NextPageWithLayout<
-  InferGetStaticPropsType<typeof getStaticProps>
-> = ({ post }) => {
-  const { copy, isCopied } = useCopyToClipboard();
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function generateStaticParams(): Promise<
+  PostPageProps["params"][]
+> {
+  return Post.getAll().map((post) => ({
+    slug: post.slugAsParams.split("/"),
+  }));
+}
+
+const PostPage = async ({ params }: { params: { slug: string[] } }) => {
+  const post = await getPostFromParams(params);
+
+  if (!post) notFound();
 
   return (
     <>
-      <NextSeo
+      {/* <NextSeo
         title={post.title}
         description={post.description}
         openGraph={{
@@ -70,7 +104,7 @@ const PostPage: NextPageWithLayout<
             },
           ],
         }}
-      />
+      /> */}
       <article className="grid grid-cols-blog [&>*:not([class^='col-blog'])]:col-blog-main">
         <div className="col-blog-wide mb-4 animate-in fade-in slide-in-from-top-8 md:mb-12">
           <AspectRatio
@@ -110,21 +144,14 @@ const PostPage: NextPageWithLayout<
               <IconButton asChild rounded="full" size="sm">
                 <NextLink
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    `Read "${post.title}" by @vincent_dstr here: ${env.NEXT_PUBLIC_URL}${post.slug}`
+                    `Read "${post.title}" by @vincent_dstr here: ${env.NEXT_PUBLIC_URL}${post.slug}`,
                   )}`}
                   target="_blank"
                 >
                   <SiTwitter />
                 </NextLink>
               </IconButton>
-              <IconButton
-                onClick={() => copy(`${env.NEXT_PUBLIC_URL}${post.slug}`)}
-                rounded="full"
-                variant={isCopied ? "success" : "default"}
-                size="sm"
-              >
-                {isCopied ? <TbCheck /> : <TbCopy />}
-              </IconButton>
+              <ShareCopyButton value={`${env.NEXT_PUBLIC_URL}${post.slug}`} />
             </div>
           </div>
         </div>
@@ -132,7 +159,5 @@ const PostPage: NextPageWithLayout<
     </>
   );
 };
-
-PostPage.getLayout = (page) => <DefaultLayout>{page}</DefaultLayout>;
 
 export default PostPage;

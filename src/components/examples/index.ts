@@ -1,3 +1,4 @@
+"use client";
 import { ButtonsAll } from "./buttons/all";
 import { ButtonsReact } from "./buttons/react";
 import { ButtonsIconReact } from "./buttons/icon-react";

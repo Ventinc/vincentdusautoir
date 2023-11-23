@@ -12,7 +12,12 @@ const config = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["i.scdn.co"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
+      },
+    ],
   },
   async rewrites() {
     return [

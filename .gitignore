@@ -42,3 +42,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 .contentlayer
+
+robots.txt
+sitemap.xml
+sitemap-*.xml

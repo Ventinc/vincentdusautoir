@@ -18,22 +18,10 @@
  */
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
-import type { AppRouter } from "@/server/api/root";
+import type { AppRouter } from "~/server/api/root";
 
-type CreateContextOptions = Record<string, never>;
-
-/**
- * This helper generates the "internals" for a tRPC context. If you need to use
- * it, you can export it from here.
- *
- * Examples of things you may need it for:
- * - testing, so we don't have to mock Next.js' req/res
- * - tRPC's `createSSGHelpers`, where we don't have req/res
- *
- * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
- */
-export const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-  return {};
+type CreateContextOptions = {
+  headers: Headers;
 };
 
 /**
@@ -42,8 +30,10 @@ export const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
+export const createTRPCContext = (opts: CreateContextOptions) => {
+  return {
+    ...opts,
+  };
 };
 
 /**

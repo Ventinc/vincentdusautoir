@@ -1,4 +1,4 @@
-import { cn } from "@/utils/tailwind";
+import { cn } from "~/utils/tailwind";
 import { useState, type ReactNode } from "react";
 
 export const GithubCard: React.FC<{ children?: ReactNode }> = ({
@@ -42,11 +42,11 @@ export const GithubCard: React.FC<{ children?: ReactNode }> = ({
       <div
         id="blob"
         className={cn(
-          `absolute top-0 left-0 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full  bg-green-500 blur-lg transition-all duration-75 ease-linear`,
+          `absolute left-0 top-0 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full  bg-green-500 blur-lg transition-all duration-75 ease-linear`,
           {
             "opacity-100": blobVisible,
             "opacity-0": !blobVisible,
-          }
+          },
         )}
         style={{ top: blobPos.y, left: blobPos.x }}
       />

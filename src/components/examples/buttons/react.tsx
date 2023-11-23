@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { Button } from "~/components/ui/button";
 import { TbSend, TbTrash } from "react-icons/tb";
 
 export const ButtonsReact = () => {

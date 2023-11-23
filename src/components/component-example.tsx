@@ -1,7 +1,8 @@
-import { cn } from "@/utils/tailwind";
+"use client";
+import { cn } from "~/utils/tailwind";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import React from "react";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 
 export type Props = React.ComponentPropsWithoutRef<typeof Tabs> & {
   align?: "start" | "center" | "end";

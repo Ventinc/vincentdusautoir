@@ -1,8 +1,7 @@
-import { env } from "@/env/client.mjs";
-import { Post } from "@/utils/content";
-import { type NextApiHandler } from "next";
+import { env } from "~/env/client.mjs";
+import { Post } from "~/utils/content";
 
-const getRss: NextApiHandler = (req, res) => {
+const getRss = () => {
   const posts = Post.getAll();
 
   const items = posts
@@ -15,7 +14,7 @@ const getRss: NextApiHandler = (req, res) => {
   <guid isPermaLink="true">${env.NEXT_PUBLIC_URL}${post.slug}</guid>
   <pubDate>${new Date(post.date).toUTCString()}</pubDate>
 </item>
-  `
+  `,
     )
     .join("");
 
@@ -30,7 +29,7 @@ const getRss: NextApiHandler = (req, res) => {
     ${
       posts[0]
         ? `<lastBuildDate>${new Date(
-            posts[0]?.date
+            posts[0]?.date,
           ).toUTCString()}</lastBuildDate>`
         : ""
     }
@@ -43,9 +42,11 @@ const getRss: NextApiHandler = (req, res) => {
   </rss>
   `.trim();
 
-  res.setHeader("content", "text/xml");
-
-  return res.status(200).send(rss);
+  return new Response(rss, {
+    headers: {
+      "content-type": "text/xml",
+    },
+  });
 };
 
-export default getRss;
+export { getRss as GET };

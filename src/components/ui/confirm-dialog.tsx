@@ -1,3 +1,4 @@
+"use client";
 import {
   createContext,
   useCallback,
@@ -16,7 +17,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/AlertDialog";
+} from "~/components/ui/alert-dialog";
 
 const ConfirmDialog = ({
   title,
@@ -31,6 +32,7 @@ const ConfirmDialog = ({
   onCancel: () => void;
   isOpen: boolean;
 }) => {
+  console.log({ title, description, isOpen });
   return (
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
@@ -77,6 +79,8 @@ export const ConfirmDialogProvider = ({
       resolveRef.current = res;
     });
   }, []);
+
+  console.log("HERE", { open, props });
 
   return (
     <ConfirmDialogContext.Provider value={confirm}>

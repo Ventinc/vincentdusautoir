@@ -1,5 +1,5 @@
-import { baseButtonVariants } from "@/components/ui/Button/BaseButton";
-import { cn } from "@/utils/tailwind";
+import { baseButtonVariants } from "~/components/ui/button/base-button";
+import { cn } from "~/utils/tailwind";
 
 export const ButtonsUnstyled = () => {
   return (
@@ -36,7 +36,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "xs", rounded: "none" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button xs
@@ -44,7 +44,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "sm", rounded: "none" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button sm
@@ -52,7 +52,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "md", rounded: "none" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button md
@@ -60,7 +60,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "lg", rounded: "none" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button lg
@@ -68,7 +68,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "xl", rounded: "none" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button xl
@@ -79,7 +79,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "xs", rounded: "full" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button xs
@@ -87,7 +87,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "sm", rounded: "full" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button sm
@@ -95,7 +95,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "md", rounded: "full" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button md
@@ -103,7 +103,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "lg", rounded: "full" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button lg
@@ -111,7 +111,7 @@ export const ButtonsUnstyled = () => {
         <button
           className={cn(
             baseButtonVariants({ size: "xl", rounded: "full" }),
-            "bg-cyan-400"
+            "bg-cyan-400",
           )}
         >
           Button xl

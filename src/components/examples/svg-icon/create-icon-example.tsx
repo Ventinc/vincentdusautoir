@@ -1,4 +1,4 @@
-import { createIcon } from "@/components/ui/Icon";
+import { createIcon } from "~/components/ui/Icon";
 
 const BigSmileIcon = createIcon({
   displayName: "BigSmileIcon",

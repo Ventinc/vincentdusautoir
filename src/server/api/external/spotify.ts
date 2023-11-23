@@ -1,8 +1,9 @@
-import { env } from "@/env/server.mjs";
+"use server";
+import { env } from "~/env/server.mjs";
 import querystring from "node:querystring";
 
 const basic = Buffer.from(
-  env.SPOTIFY_CLIENT_ID + ":" + env.SPOTIFY_CLIENT_SECRET
+  env.SPOTIFY_CLIENT_ID + ":" + env.SPOTIFY_CLIENT_SECRET,
 ).toString("base64");
 
 interface AccessToken {
@@ -35,7 +36,7 @@ export const getTopTracks = async (accessToken: string) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    }
+    },
   );
 };
 

@@ -1,4 +1,4 @@
-import { useToggleTheme } from "@/hooks/useToggleTheme";
+import { useToggleTheme } from "~/hooks/use-toggle-theme";
 
 export function TailwindIndicator() {
   const toggleTheme = useToggleTheme();

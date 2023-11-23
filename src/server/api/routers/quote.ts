@@ -1,4 +1,4 @@
-import { type Quote, quotes } from "@/content/quotes";
+import { type Quote, quotes } from "~/content/quotes";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const quoteRouter = createTRPCRouter({

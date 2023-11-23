@@ -1,4 +1,4 @@
-import { env } from "@/env/client.mjs";
+import { env } from "~/env/client.mjs";
 import { type DefaultSeoProps } from "next-seo";
 
 export const seoConfig: DefaultSeoProps = {

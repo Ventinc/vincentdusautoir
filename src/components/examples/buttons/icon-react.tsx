@@ -1,4 +1,4 @@
-import { IconButton } from "@/components/ui/Button";
+import { IconButton } from "~/components/ui/button";
 import { Tb3DRotate, TbSend, TbThumbUp, TbTrash } from "react-icons/tb";
 
 export const ButtonsIconReact = () => {

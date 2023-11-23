@@ -1,12 +1,13 @@
-import { Card } from "@/components/Card";
-import { Marquee } from "@/components/ui/Marquee";
+"use client";
+import { Card } from "~/components/card";
+import { Marquee } from "~/components/ui/marquee";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/Tooltip";
-import type { RouterOutput } from "@/server/api/trpc";
-import { api } from "@/utils/api";
+} from "~/components/ui/tooltip";
+import type { RouterOutput } from "~/server/api/trpc";
+import { api } from "~/utils/api";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { Disc3Icon } from "lucide-react";
 import Image from "next/image";
@@ -45,7 +46,7 @@ const SpotifyAlbum = ({ track }: { track: Track }) => {
 
 const SpotifyAlbumSkeleton = () => {
   return (
-    <div className="group relative flex w-full flex-1 animate-pulse flex-col justify-start overflow-hidden transition-all">
+    <div className="group relative flex w-[200px] flex-1 animate-pulse flex-col justify-start overflow-hidden transition-all">
       <AspectRatio className="rounded-lg bg-spotify" ratio={1}></AspectRatio>
       <div className="mt-1">
         <div className="mb-1 h-4 w-16 rounded-full bg-white/70"></div>
