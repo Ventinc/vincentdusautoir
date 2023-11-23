@@ -1,4 +1,4 @@
-import { Icon } from "~/components/ui/Icon";
+import { Icon } from "~/components/ui/icon";
 import { SmileIcon } from "lucide-react";
 
 // SmileIcon can be from your library or your assets

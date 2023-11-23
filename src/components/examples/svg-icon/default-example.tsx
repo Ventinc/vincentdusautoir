@@ -1,4 +1,4 @@
-import { Icon } from "~/components/ui/Icon";
+import { Icon } from "~/components/ui/icon";
 
 export const DefaultIconExample = () => {
   return (
