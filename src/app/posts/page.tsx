@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { type Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PageTitle } from "~/components/page-title";
@@ -6,15 +7,16 @@ import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { H2 } from "~/components/ui/typography";
 import { Post } from "~/utils/content";
 
+export const metadata: Metadata = {
+  title: "Posts",
+  description: "Ideas, stories, and thing that I want to share.",
+};
+
 const BlogPage = () => {
   const posts = Post.getAll();
 
   return (
     <>
-      {/* <NextSeo
-        title="Posts"
-        description="Ideas, stories, and things that I want to share."
-      /> */}
       <main className="container">
         <PageTitle
           title="Posts"
