@@ -1,3 +1,4 @@
+"use client";
 import { cn } from "~/utils/tailwind";
 import type { ReactNode } from "react";
 
