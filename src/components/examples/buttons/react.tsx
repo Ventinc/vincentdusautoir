@@ -1,5 +1,5 @@
+import { SendIcon, TrashIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { TbSend, TbTrash } from "react-icons/tb";
 
 export const ButtonsReact = () => {
   return (
@@ -11,11 +11,11 @@ export const ButtonsReact = () => {
         size="md"
         rounded="md"
         variant="destructive"
-        leftIcon={<TbTrash />}
+        leftIcon={<TrashIcon />}
       >
         IconLeft
       </Button>
-      <Button size="md" rounded="md" variant="default" rightIcon={<TbSend />}>
+      <Button size="md" rounded="md" variant="default" rightIcon={<SendIcon />}>
         IconRight
       </Button>
       <Button size="md" rounded="md" variant="default" isLoading>

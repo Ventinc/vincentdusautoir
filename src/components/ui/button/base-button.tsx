@@ -1,8 +1,9 @@
 import { cn } from "~/utils/tailwind";
 import { cva, type VariantProps } from "class-variance-authority";
 import React, { type ComponentPropsWithoutRef, useMemo } from "react";
-import { TbLoader } from "react-icons/tb";
 import { Slot, Slottable } from "@radix-ui/react-slot";
+import { Loader2Icon } from "lucide-react";
+import { Icon } from "~/components/ui/icon";
 
 export const baseButtonVariants = cva(
   "font-medium text-center relative whitespace-nowrap align-middle outline-none inline-flex items-center justify-center",
@@ -58,7 +59,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
       let icon = rightIcon ? rightIcon : leftIcon;
 
       if (isLoading) {
-        icon = <TbLoader className="animate-spin-slow" />;
+        icon = <Loader2Icon className="animate-spin-slow" />;
       }
 
       return {
@@ -82,7 +83,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
               "inline-flex shrink-0 self-center",
             )}
           >
-            {icon}
+            <Icon asChild>{icon}</Icon>
           </span>
         ) : null}
         <Slottable>{children}</Slottable>
@@ -93,7 +94,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
               "inline-flex shrink-0 self-center",
             )}
           >
-            {icon}
+            <Icon asChild>{icon}</Icon>
           </span>
         ) : null}
       </Comp>

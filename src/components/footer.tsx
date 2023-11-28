@@ -1,12 +1,13 @@
 "use client";
 
+import { MoonStarIcon, RssIcon, SunIcon } from "lucide-react";
+import Image from "next/image";
+import NextLink from "next/link";
+import { Icon } from "~/components/ui/icon";
 import { siteConfig } from "~/config/site";
 import { useToggleTheme } from "~/hooks/use-toggle-theme";
-import Image from "next/image";
-import { TbMoonStars, TbRss, TbSun } from "react-icons/tb";
 import { Button, IconButton } from "./ui/button";
 import { H4, Link } from "./ui/typography";
-import NextLink from "next/link";
 
 export const Footer = () => {
   const toggleTheme = useToggleTheme();
@@ -58,6 +59,9 @@ export const Footer = () => {
             <Link className="no-underline hover:underline" href="/posts">
               Posts
             </Link>
+            <Link className="no-underline hover:underline" href="/links">
+              Links
+            </Link>
             <Link className="no-underline hover:underline" href="/about">
               About
             </Link>
@@ -99,12 +103,18 @@ export const Footer = () => {
               variant="subtle"
               onClick={toggleTheme}
             >
-              <TbMoonStars className="hidden dark:block" />
-              <TbSun className="dark:hidden" />
+              <Icon asChild>
+                <MoonStarIcon className="hidden dark:block" />
+              </Icon>
+              <Icon asChild>
+                <SunIcon className="dark:hidden" />
+              </Icon>
             </IconButton>
             <IconButton aria-label="RSS" variant="subtle" asChild>
               <NextLink href="/rss">
-                <TbRss />
+                <Icon asChild>
+                  <RssIcon />
+                </Icon>
               </NextLink>
             </IconButton>
           </div>

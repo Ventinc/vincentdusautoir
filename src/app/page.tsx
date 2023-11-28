@@ -105,7 +105,7 @@ const IndexPage = () => {
             return (
               <Card
                 key={post._id}
-                className="group relative flex flex-col overflow-hidden rounded-xl p-2 transition-shadow hover:shadow-md dark:bg-neutral-800 dark:shadow-white/10"
+                className="group relative flex flex-col overflow-hidden rounded-xl p-3 transition-shadow hover:shadow-md dark:bg-neutral-800 dark:shadow-white/10"
               >
                 <div className="relative mb-1 w-full overflow-hidden rounded-lg">
                   <AspectRatio ratio={21 / 9}>

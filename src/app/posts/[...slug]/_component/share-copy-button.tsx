@@ -1,7 +1,8 @@
 "use client";
 
-import { TbCheck, TbCopy } from "react-icons/tb";
+import { CheckIcon, CopyIcon } from "lucide-react";
 import { IconButton } from "~/components/ui/button";
+import { Icon } from "~/components/ui/icon";
 import { useCopyToClipboard } from "~/hooks/use-copy-to-clipboard";
 
 export const ShareCopyButton = ({ value }: { value: string }) => {
@@ -13,7 +14,7 @@ export const ShareCopyButton = ({ value }: { value: string }) => {
       variant={isCopied ? "success" : "default"}
       size="sm"
     >
-      {isCopied ? <TbCheck /> : <TbCopy />}
+      <Icon asChild>{isCopied ? <CheckIcon /> : <CopyIcon />}</Icon>
     </IconButton>
   );
 };

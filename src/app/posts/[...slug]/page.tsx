@@ -1,13 +1,14 @@
 import { format, parseISO } from "date-fns";
+import { TwitterIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
-import { SiTwitter } from "react-icons/si";
 import { ShareCopyButton } from "~/app/posts/[...slug]/_component/share-copy-button";
 import { Mdx } from "~/components/mdx";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { IconButton } from "~/components/ui/button";
+import { Icon } from "~/components/ui/icon";
 import { H1, Link } from "~/components/ui/typography";
 import { siteConfig } from "~/config/site";
 import { env } from "~/env/client.mjs";
@@ -148,7 +149,9 @@ const PostPage = async ({ params }: { params: { slug: string[] } }) => {
                   )}`}
                   target="_blank"
                 >
-                  <SiTwitter />
+                  <Icon asChild>
+                    <TwitterIcon />
+                  </Icon>
                 </NextLink>
               </IconButton>
               <ShareCopyButton value={`${env.NEXT_PUBLIC_URL}${post.slug}`} />

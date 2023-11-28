@@ -1,20 +1,29 @@
+import { Rotate3DIcon, SendIcon, ThumbsUpIcon, TrashIcon } from "lucide-react";
 import { IconButton } from "~/components/ui/button";
-import { Tb3DRotate, TbSend, TbThumbUp, TbTrash } from "react-icons/tb";
+import { Icon } from "~/components/ui/icon";
 
 export const ButtonsIconReact = () => {
   return (
     <div className="flex gap-2">
       <IconButton size="lg" rounded="md" variant="subtle-brand">
-        <TbThumbUp />
+        <Icon asChild>
+          <ThumbsUpIcon />
+        </Icon>
       </IconButton>
       <IconButton size="lg" rounded="md" variant="subtle-destructive">
-        <TbTrash />
+        <Icon asChild>
+          <TrashIcon />
+        </Icon>
       </IconButton>
       <IconButton size="lg" rounded="md" variant="subtle">
-        <TbSend />
+        <Icon asChild>
+          <SendIcon />
+        </Icon>
       </IconButton>
       <IconButton size="lg" rounded="md" variant="subtle" isLoading>
-        <Tb3DRotate />
+        <Icon asChild>
+          <Rotate3DIcon />
+        </Icon>
       </IconButton>
     </div>
   );
