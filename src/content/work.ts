@@ -13,6 +13,12 @@ export const workContent: Work[] = [
     period: ["May 2018", "Present"],
   },
   {
+    icon: "/images/work/tractr.png",
+    name: "Tractr",
+    position: "Fullstack Developer",
+    period: ["November 2023", "Present"],
+  },
+  {
     icon: "/images/work/derniercri.png",
     name: "Dernier Cri",
     position: "Software Engineer",
