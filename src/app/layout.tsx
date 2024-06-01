@@ -6,7 +6,7 @@ import { Analytics } from "~/components/analytics";
 import { Footer } from "~/components/footer";
 import { Header } from "~/components/header";
 import { AppProviders } from "~/components/providers";
-import { env } from "~/env/client.mjs";
+import { env } from "~/env";
 import "~/styles/globals.css";
 import { TRPCReactProvider } from "~/trpc/react";
 import { cn } from "~/utils/tailwind";

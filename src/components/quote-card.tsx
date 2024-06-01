@@ -1,8 +1,8 @@
 import { Card } from "~/components/card";
-import { type Quote, quotes } from "~/content/quotes";
+import { quotes } from "~/content/quotes";
 
 const getRandomQuote = () => {
-  return quotes[Math.floor(Math.random() * quotes.length)] as Quote;
+  return quotes[Math.floor(Math.random() * quotes.length)]!;
 };
 
 export const QuoteCard = () => {

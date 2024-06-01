@@ -24,7 +24,7 @@ export const ComponentExample: React.FC<Props> = ({
       className={cn("group relative my-4 rounded-md", className)}
       {...props}
     >
-      {title || code ? (
+      {title ?? code ? (
         <TabsList className="mb-1 flex h-8 w-fit items-center gap-2 rounded-lg bg-zinc-200 px-1 font-mono text-xs dark:bg-zinc-800">
           {title ? <p className="p-1 font-bold">{title}</p> : null}
           {code ? (

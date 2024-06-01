@@ -98,14 +98,19 @@ export default makeSource({
             );
             return await getHighlighter({ theme });
           },
+          // @ts-expect-error yes
           onVisitLine(node) {
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (node.children.length === 0) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               node.children = [{ type: "text", value: " " }];
             }
           },
+          // @ts-expect-error yes
           onVisitHighlightedWord(node) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             node.properties.className = ["word--highlighted"];
           },
         },

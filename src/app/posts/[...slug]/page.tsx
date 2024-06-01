@@ -11,7 +11,7 @@ import { IconButton } from "~/components/ui/button";
 import { Icon } from "~/components/ui/icon";
 import { H1, Link } from "~/components/ui/typography";
 import { siteConfig } from "~/config/site";
-import { env } from "~/env/client.mjs";
+import { env } from "~/env";
 import { Post } from "~/utils/content";
 import { absoluteUrl } from "~/utils/url";
 

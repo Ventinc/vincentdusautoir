@@ -1,4 +1,4 @@
-import { env } from "~/env/client.mjs";
+import { env } from "~/env.js";
 import { Post } from "~/utils/content";
 
 const getRss = () => {

@@ -30,9 +30,9 @@ export interface UnistTree extends Node {
 export function rehypeComponentFileSource() {
   return (tree: UnistTree) => {
     visit(tree, (node: UnistNode) => {
-      const { value: filesrc } = getNodeAttributeByName(node, "filesrc") || {};
+      const { value: filesrc } = getNodeAttributeByName(node, "filesrc") ?? {};
       const { value: filelanguage } =
-        getNodeAttributeByName(node, "filelanguage") || {};
+        getNodeAttributeByName(node, "filelanguage") ?? {};
 
       if (node.name === "ComponentExample") {
         const source = getComponentSourceFileContent(node);
@@ -65,7 +65,7 @@ export function rehypeComponentFileSource() {
                 ],
               }),
             ],
-          })
+          }),
         );
       }
     });

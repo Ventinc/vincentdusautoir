@@ -1,5 +1,5 @@
 "use server";
-import { env } from "~/env/server.mjs";
+import { env } from "~/env";
 import querystring from "node:querystring";
 
 const basic = Buffer.from(

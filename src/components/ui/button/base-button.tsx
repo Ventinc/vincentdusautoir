@@ -72,7 +72,7 @@ export const BaseButton = React.forwardRef<HTMLButtonElement, BaseButtonProps>(
       <Comp
         className={cn(baseButtonVariants({ size, rounded, className }))}
         ref={ref}
-        disabled={disabled || isLoading}
+        disabled={disabled ?? isLoading}
         data-state={isLoading ? "loading" : undefined}
         {...props}
       >

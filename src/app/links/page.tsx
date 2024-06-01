@@ -63,7 +63,7 @@ const linkSections: LinkSection[] = [
   },
 ];
 
-const LinksPage = () => {
+const LinksPage = async () => {
   return (
     <div className="container flex max-w-xl flex-col gap-4">
       {linkSections.map((linkSection) => (
