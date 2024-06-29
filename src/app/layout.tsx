@@ -82,7 +82,7 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body
@@ -103,6 +103,6 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       </body>
     </html>
   );
-};
+}
 
 export default RootLayout;
