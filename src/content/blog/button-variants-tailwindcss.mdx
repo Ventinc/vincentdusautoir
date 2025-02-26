@@ -1,0 +1,330 @@
+---
+title: Button variants and TailwindCSS
+description: How I implement Button variants with TailwindCSS in my projects.
+date: '2023-02-25'
+slug: button-variants-tailwindcss
+---
+
+import ComponentExample from '#/components/component-example.astro';
+import { ButtonsAll } from '#/components/examples/button-variants-tailwindcss/all';
+import { ButtonsIconReact } from '#/components/examples/button-variants-tailwindcss/icon-react';
+import { ButtonsReact } from '#/components/examples/button-variants-tailwindcss/react';
+import { ButtonsSolid } from '#/components/examples/button-variants-tailwindcss/solid';
+import { ButtonsUnstyled } from '#/components/examples/button-variants-tailwindcss/unstyled';
+
+_**It's only how I implement this in my projects**. You can do what you want
+for your UI components as long as it suits your need and your team._
+
+## Packages I use
+
+To design with tailwindcss I use three different packages, `clsx` to conditionnaly construct my classes, `class-variance-authority` a package that allow you to create an objet with a base style, variants, and compound variants, and `tailwind-merge` a utility function to efficiently merge tailwindcss classes without style conflicts.
+
+```bash
+pnpm install class-variance-authority clsx tailwind-merge
+```
+
+Once I've this packages in my project with tailwind. I create a util function `cn` that is just a shortcut to use `tailwind-merge` and `clsx` directly together.
+
+```typescript
+import { ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+## Button variants
+
+For me a button is very simple, it has a base style that manage roundness, font, and size of the button. Then there is only color that is applied on border, background and text for each state of the button.
+
+Now that you know how I interpret a button. Let's create a base with `cva` from `class-variance-authority`. Even in Button should be simple there is a lot of different design that can be applied in a project so for this I prefer to use Class Variance Authority.
+
+This is the base style I use on this blog:
+
+```typescript
+import { cva } from 'class-variance-authority';
+
+export const baseButtonVariants = cva(
+  'font-medium text-center relative whitespace-nowrap align-middle outline-none inline-flex items-center justify-center',
+  {
+    variants: {
+      size: {
+        xs: 'text-xs h-6 min-w-6 px-2',
+        sm: 'text-sm h-8 min-w-8 px-3',
+        md: 'text-base h-10 min-w-10 px-4',
+        lg: 'text-lg h-12 min-w-12 px-6',
+        xl: 'text-xl h-14 min-w-14 px-8',
+      },
+      rounded: {
+        none: 'rounded-none',
+        md: 'rounded-md',
+        full: 'rounded-full',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+      rounded: 'md',
+    },
+  }
+);
+```
+
+Here is an example only with a background color to display variants of size and roundness
+
+<ComponentExample
+  title="Base Style Buttons"
+>
+  <ButtonsUnstyled client:load />
+  <div slot="code">
+  ```tsx file=<rootDir>/components/examples/button-variants-tailwindcss/unstyled.tsx
+  ```
+  </div>
+</ComponentExample>
+
+Then I create a `buttonVariants` that is also use `cva`. In this buttonVariants their will be all kind of variants your button can have, for example: `default`, `brand`, `destructive`, etc. But for me it's mandatory to have different kinds of variants such as `solid`, `outline`, `subtle` or `ghost`.
+
+Because `cva` just return a function with parameters I decided to create subvariants like `solidVariants` and use it directly in `buttonVariants`. At the end with this approach I have a code like this one below.
+
+```typescript
+import { cva } from 'class-variance-authority';
+
+const solidVariants = cva('', {
+  variants: {
+    variant: {
+      default: 'bg-zinc-900 text-white hover:bg-zinc-700 ',
+      brand:
+        'outline-none bg-gradient-to-r from-brand-600 via-brand-400 to-brand-600 text-white hover:outline-2 outline-offset-0 hover:outline-zinc-900 transition-all bg-left hover:bg-right bg-[size:200%]',
+      destructive: 'bg-red-500 text-white hover:bg-red-600 ',
+    },
+  },
+});
+
+export const buttonVariants = cva(
+  'focus:ring-2 focus:ring-zinc-300 focus:ring-offset-2 disabled:opacity-50 duration-150',
+  {
+    variants: {
+      variant: {
+        default: solidVariants({ variant: 'default' }),
+        brand: solidVariants({ variant: 'brand' }),
+        destructive: solidVariants({ variant: 'destructive' }),
+        link: 'bg-transparent underline-offset-4 hover:underline text-zinc-900 ',
+        unstyled: '',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  }
+);
+```
+
+As you can see for me `solid` is the default variant for a button, and with that code now we can do this with our `baseButtonVariants`
+
+<ComponentExample title="Solid Style Buttons">
+  <ButtonsSolid client:load />
+  <div slot="code">
+  ```tsx file=<rootDir>/components/examples/button-variants-tailwindcss/solid.tsx
+  ```
+  </div>
+</ComponentExample>
+
+Now I can add other variants like `ghost`, `outline` and `subtle` the same way I added solid. Except now other than default variant of each types will have a prefix `{{type}}-`.
+
+```typescript
+import { cva } from 'class-variance-authority';
+
+const outlineVariants = cva('border-2', {
+  variants: {
+    variant: {
+      default: 'text-zinc-900 hover:bg-zinc-200 border-zinc-900 ',
+      brand: 'text-brand-500 hover:bg-brand-400/20 border-brand-500',
+      destructive: 'text-red-500 hover:bg-red-400/20 border-red-500',
+    },
+  },
+});
+
+const subtleVariants = cva('', {
+  variants: {
+    variant: {
+      default: 'text-zinc-900 bg-zinc-200 hover:bg-zinc-300 border-zinc-900 ',
+      brand:
+        'text-brand-500 bg-brand-400/20 hover:bg-brand-400/30 border-brand-500',
+      destructive:
+        'text-red-500 bg-red-400/20 hover:bg-red-400/30 border-red-500',
+    },
+  },
+});
+
+const ghostVariants = cva('', {
+  variants: {
+    variant: {
+      default: 'text-zinc-900 hover:bg-zinc-200 border-zinc-900 ',
+      brand: 'text-brand-500 hover:bg-brand-400/20 border-brand-500',
+      destructive: 'text-red-500 hover:bg-red-400/20 border-red-500',
+    },
+  },
+});
+
+export const buttonVariants = cva('...', {
+  variants: {
+    variant: {
+      //...
+      outline: outlineVariants({ variant: 'default' }),
+      'outline-brand': outlineVariants({ variant: 'brand' }),
+      'outline-destructive': outlineVariants({ variant: 'destructive' }),
+      ghost: ghostVariants({ variant: 'default' }),
+      'ghost-brand': ghostVariants({ variant: 'brand' }),
+      'ghost-destructive': ghostVariants({ variant: 'destructive' }),
+      subtle: subtleVariants({ variant: 'default' }),
+      'subtle-brand': subtleVariants({ variant: 'brand' }),
+      'subtle-destructive': subtleVariants({ variant: 'destructive' }),
+      //...
+    },
+  },
+});
+```
+
+<ComponentExample
+  filesrc="/components/examples/buttons/all.tsx"
+  title="All button variants"
+>
+  <ButtonsAll client:load />
+  <div slot="code">
+  ```tsx file=<rootDir>/components/examples/button-variants-tailwindcss/all.tsx
+  ```
+  </div>
+</ComponentExample>
+
+## How I use this with react
+
+Now that I have my variants for my buttons and my base style. I want to have a component that handle `isLoading`, `leftIcon`, `rightIcon`, and an IconButton
+
+For that I create a `BaseButton` component that only has the `baseButtonVariants` style.
+
+```tsx
+export type BaseButtonProps = React.ComponentProps<'button'> &
+  VariantProps<typeof baseButtonVariants> & {
+    isLoading?: boolean;
+    leftIcon?: React.ReactElement;
+    rightIcon?: React.ReactElement;
+    asChild?: boolean;
+  };
+
+export function BaseButton({
+  className,
+  size,
+  rounded,
+  leftIcon,
+  rightIcon,
+  children,
+  isLoading,
+  disabled,
+  asChild,
+  ...props
+}: BaseButtonProps) {
+  const Comp = (asChild ? Slot.Slot : 'button') as 'button';
+
+  const { icon, iconPlacement } = useMemo(() => {
+    let icon = rightIcon ? rightIcon : leftIcon;
+
+    if (isLoading) {
+      icon = <Loader2Icon className="animate-spin-slow" />;
+    }
+
+    return {
+      icon,
+      iconPlacement: rightIcon ? ('right' as const) : ('left' as const),
+    };
+  }, [isLoading, leftIcon, rightIcon]);
+
+  return (
+    <Comp
+      className={cn(baseButtonVariants({ size, rounded, className }))}
+      disabled={disabled ?? isLoading}
+      data-state={isLoading ? 'loading' : undefined}
+      {...props}
+    >
+      {icon && iconPlacement === 'left' ? (
+        <span
+          className={cn(
+            { 'mr-2': !!children },
+            'inline-flex shrink-0 self-center'
+          )}
+        >
+          <Icon asChild>{icon}</Icon>
+        </span>
+      ) : null}
+      <Slot.Slottable>{children}</Slot.Slottable>
+      {icon && iconPlacement === 'right' ? (
+        <span
+          className={cn(
+            { 'ml-2': !!children },
+            'inline-flex shrink-0 self-center'
+          )}
+        >
+          <Icon asChild>{icon}</Icon>
+        </span>
+      ) : null}
+    </Comp>
+  );
+}
+```
+
+Then I create a very simple `Button` component but now that has also buttonVariants as `props` and `className`.
+
+```tsx
+export function Button({
+  className,
+  variant,
+  ...props
+}: React.ComponentProps<typeof BaseButton> &
+  VariantProps<typeof buttonVariants>) {
+  return (
+    <BaseButton
+      className={cn(buttonVariants({ variant, className }))}
+      {...props}
+    />
+  );
+}
+```
+
+With this `Button` component I can now create a lot of different Buttons just like below.
+
+<ComponentExample
+  filesrc="/components/examples/buttons/react.tsx"
+  title="React Buttons"
+>
+  <ButtonsReact client:load />
+  <div slot="code">
+  ```tsx file=<rootDir>/components/examples/button-variants-tailwindcss/react.tsx
+  ```
+  </div>
+</ComponentExample>
+
+Now because in the base variant I use a `min-w-[x]` with the same size as the `h-[x]`, I can create an icon button just by removing horizontal padding with `p-0`. So my `IconButton` in react looks like this. I remove as well leftIcon and rightIcon
+
+```tsx
+export function IconButton({
+  className,
+  children,
+  ...props
+}: Omit<React.ComponentProps<typeof Button>, 'leftIcon' | 'rightIcon'>) {
+  return (
+    <Button {...props} className={cn('p-0', className)}>
+      {props.isLoading ? null : children}
+    </Button>
+  );
+}
+```
+
+<ComponentExample
+  filesrc="/components/examples/buttons/icon-react.tsx"
+  title="React IconButtons"
+>
+  <ButtonsIconReact client:load />
+  <div slot="code">
+  ```tsx file=<rootDir>/components/examples/button-variants-tailwindcss/icon-react.tsx
+  ```
+  </div>
+</ComponentExample>

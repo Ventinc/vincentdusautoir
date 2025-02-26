@@ -1,0 +1,196 @@
+---
+title: Hover card blob with TailwindCSS
+description: How I implement Github like hover card with TailwindCSS and React.
+slug: hover-card-blob
+date: '2023-03-13'
+---
+
+import { GithubCard } from '#/components/examples/github-card/result';
+import { GithubCardDesign } from '#/components/examples/github-card/design';
+import ComponentExample from '#/components/component-example.astro';
+
+Yesterday, I saw the new landing page of [Github](https://github.com) and on this page there are this amazing cards that on `:hover` display a blob in the background. And I think it's a good think to make this a challenge for me to copy this effect in maximum one hour and documenting it here.
+
+_For this challenge I'll use **React** and **TailwindCSS**. But it's the same
+thing to make it with html, css and js._
+
+Below is what we want to have in the end. To have a better experience, go on a regular browser, not a mobile one.
+
+<ComponentExample>
+  <GithubCard client:load />
+</ComponentExample>
+
+## Create and Style the component
+
+So the first thing I need to do is just the simple architecture of the Card. I've just add ids for to explain what is each part of the card.
+
+```tsx
+const Card;
+React.FC<{ children?: ReactNode }> = () => {
+  return (
+    <div id="card">
+      <div id="blob" />
+      <div id="inner">{children}</div>
+    </div>
+  );
+};
+```
+
+Then I need to add the style of the card and the blob with **TailwindCSS**
+
+```tsx
+export const Card: React.FC<{ children?: ReactNode }> = ({ children }) => {
+  return (
+    <div
+      id="card"
+      className="relative z-auto block overflow-hidden rounded-xl bg-zinc-100 p-1 dark:bg-zinc-700"
+    >
+      <div
+        id="blob"
+        className="absolute left-0 top-0 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-500 blur-lg"
+      />
+      <div
+        id="inner"
+        className="relative h-full w-full rounded-lg bg-white/75 p-8 dark:bg-zinc-900/75"
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
+```
+
+_On the blob I've added `-translate-x-1/2 -translate-y-1/2` to set the top and
+left position to be the center of it._
+
+Here is the result we have now:
+
+<ComponentExample
+  title="Github Card Design"
+>
+  <GithubCardDesign client:load />
+  <div slot="code">
+    ```tsx file=<rootDir>/components/examples/github-card/design.tsx // Auto load
+    ```
+  </div>
+</ComponentExample>
+
+Now that this is complete we only need to add hover effect and animation on the `#card` and `#blob` components of the card.
+
+## Animate the blob and the card
+
+First thing I want to animate the blob, it need to follow the cursor and maybe add some delay. For that we need to listen on `#card` if `mouseenter`, `mousemove` and `mouseleave`.
+
+- In `mouseenter`: Set the opacity of the blob to 100%.
+- In `mousemove`: Set the position of the blob to the mouse position
+- In `mouseleave`: Set the opacity of the blob to 0%.
+
+```tsx
+const Card = () => {
+  const [blobVisible, setBlobVisible] = useState(false);
+  const [blobPos, setBlobPos] = useState(false);
+
+  const onMouseEnter = () => {
+    setBlobVisible(true);
+  };
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const ev = e.nativeEvent;
+    const newPos = {
+      x: ev.clientX - rect.left,
+      y: ev.clientY - rect.top,
+    };
+
+    setBlobPos(newPos);
+  };
+  const onMouseLeave = () => {
+    setBlobVisible(false);
+  };
+
+  <div
+    onMouseMove={onMouseMove}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+    id="card"
+  >
+    <div id="blob" style={{ top: blobPos.y, left: blobPos.x }} />
+    //...
+  </div>;
+};
+```
+
+Now that the blob move and follow the cursor, I can add transitions with TailwindCSS to move the blob smoothly and link the `blobVisible` variable with the opacity.
+
+```tsx
+<div
+  id="blob"
+  className={`... transition-all duration-75 ease-linear ${
+    blobVisible ? 'opacity-100' : 'opacity-0'
+  }`}
+/>
+```
+
+The blob appear, disappear and move. I can add small rotation on the `#card` when I move on X Axis with the cursor. To do that I need to compute the percentage from the center of the `#card` on left and right in the `onMouseMove` function.
+
+Here is the schema of what I want to have to compute the rotation on Y Axis.
+
+![Compute Rotate Schema](#/assets/blog/hover-card-blob/compute-rotate.png)
+
+To have the same value I need to offset the position of the cursor by half the width of `#card`.
+
+```ts
+const posX = newPos.x - rect.width / 2;
+```
+
+Then if I divide this result by `rect.width / 2` I obtain what I want, a percentage from -100% to 100% of the position X of the curson on the `#card`.
+
+```ts
+const percentage = (newPos.x - rect.width / 2) / (rect.width / 2);
+```
+
+Now that I have the percentage, it's pretty simple to animate the `#card`, I just need to multiply it with the value of the max rotation on Y Axis I want. At the end I've added this to the current code.
+
+```tsx
+const Card = () => {
+  const [cardRotate, setCardRotate] = useState(0);
+
+  //...
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    //...
+    const percentage = (newPos.x - rect.width / 2) / (rect.width / 2);
+
+    setCardRotate(-percentage * 10);
+    //...
+  };
+  const onMouseLeave = () => {
+    setCardRotate(0); // To reset the rotation on card leave
+    //...
+  };
+
+  <div
+    //...
+    id="card"
+    className="... origin-center transition-all duration-200 ease-linear"
+    style={{
+      transform: `perspective(200px) rotateY(${cardRotate}deg)`,
+    }}
+  >
+    //...
+  </div>;
+};
+```
+
+And it's finish for this simple example of the Github Card hover effect.
+
+## Result
+
+_It's a very simple example, it will probably need a `ResizeObserver` to manage
+the return value of `#card.getBoundingClientRect()` when the card resize._
+
+<ComponentExample title="Github Card Result">
+  <GithubCard client:load />
+  <div slot="code">
+    ```tsx file=<rootDir>/components/examples/github-card/result.tsx // Auto load
+    ```
+  </div>
+</ComponentExample>

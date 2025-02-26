@@ -1,0 +1,216 @@
+---
+title: SVG Icons with TailwindCSS and React
+description: How I manage SVG Icons in an Application with TailwindCSS and React.
+date: '2023-11-01'
+slug: svg-icons-tailwind-react
+---
+
+import ComponentExample from '#/components/component-example.astro';
+import { DefaultIconExample } from '#/components/examples/svg-icons-tailwind-react/default';
+import { SlotIconExample } from '#/components/examples/svg-icons-tailwind-react/slot';
+import { CreateIconIconExample } from '#/components/examples/svg-icons-tailwind-react/create-icon';
+
+## Why I want to manage Icons the way I do ?
+
+While ago I loved using library like [ChakraUI](https://chakra-ui.com/), because it was all CSS in JS and I could manage colors, shapes and other things with only javascript. It was good but I wanted to go back to CSS because if I wanted to work with someone, the person needed to learn the ChakraUI syntax which is very specific and different from css.
+
+```tsx
+<Box bg="tomato" w="100%" p={4} color="white">
+  This is the Box
+</Box>
+```
+
+It's very easy to make someone use [tailwindcss](https://tailwindcss.com/) because it's just css instructions as classname. for the same box here is the TailwindCSS code.
+
+```tsx
+<div className="w-full bg-[tomato] p-4 text-white">This is a Box</div>
+```
+
+It's almost the same things to write but as string in a `className` prop. But it's not the same at all to use. Even today I prefer the flexibility of CSS in JS than CSS Files. However for my projects in group `tailwindcss` is a lot better. I continue to use CSS in JS for [ReactNative](https://reactnative.dev/) apps with [NativeBase](https://nativebase.io/)
+
+And all that to say that I love how ChakraUI manage SVG Icons. It's easy, super convenient and compatible with all SVG you have.
+
+## Recreate the ChakraUI Icon component.
+
+It's pretty easy, it's just a `<svg>` wrapper tag that reset size to be the current text size (1em). Reset the line height the same way and default set display to inline-block. So I decided to copy/paste their code and adapt it to use `tailwindcss` with `RadixUI`.
+
+The first step is the `Icon` component should be a `<svg/>` tag with the `className` to reset the svg.
+
+```tsx
+import React, { Children } from 'react';
+import { cn } from '~/utils/tailwind';
+
+export type IconProps = React.ComponentPropsWithoutRef<'svg'>;
+
+export const Icon = React.forwardRef<React.ElementRef<'svg'>, IconProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <svg
+        ref={ref}
+        className={cn(
+          'inline-block h-[1em] w-[1em] align-middle leading-[1em]',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+Icon.displayName = 'Icon';
+```
+
+_**cn** is a function that combine `tailwind-merge` (Utility function to
+efficiently merge Tailwind CSS classes in JS without style conflicts) and
+`clsx` (A tiny utility for constructing className strings conditionally). You
+can see how its made
+[here](https://github.com/Ventinc/vincentdusautoir/blob/main/src/utils/tailwind.ts)_
+
+Now we have a first version that can be use like below, you copy your SVG component and just change svg tag with Icon.
+
+<ComponentExample title="Default Example">
+  <DefaultIconExample />
+  <div slot="code">
+    ```tsx file=<rootDir>/components/examples/svg-icons-tailwind-react/default.tsx
+    ```
+  </div>
+</ComponentExample>
+
+It's already pretty cool but, as you can see in the code, we always need to copy the SVG and content several times or need to make another component. And most of the time, we use a library or an import from an svg asset. So it would be cool if the icon component can take a `children` and send all is props to it. That's the goal of `Radix Slot` primitive.
+
+Here is how to modify our current component to add `@radix/react-slot`:
+
+```tsx {1,5-7,10-11,14}
+import { Slot } from '@radix-ui/react-slot';
+import React, { Children } from 'react';
+import { cn } from '~/utils/tailwind';
+
+export type IconProps = React.ComponentPropsWithoutRef<'svg'> & {
+  asChild?: boolean;
+};
+
+export const Icon = React.forwardRef<React.ElementRef<'svg'>, IconProps>(
+  ({ asChild, className, ...props }, ref) => {
+    const Comp = (asChild ? Slot : 'svg') as 'svg';
+
+    return (
+      <Comp
+        ref={ref}
+        className={cn(
+          'inline-block h-[1em] w-[1em] align-middle leading-[1em]',
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+Icon.displayName = 'Icon';
+```
+
+Here is an example that use our `<Icon />` component with a `lucide-react` icon.
+
+<ComponentExample title="As a child Example">
+  <SlotIconExample />
+  <div slot="code">
+    ```tsx file=<rootDir>/components/examples/svg-icons-tailwind-react/slot.tsx
+    ```
+  </div>
+</ComponentExample>
+
+If you forget the asChild props you can see that the `<SmileIcon />` is render in another top-level `<svg />` component so it can't render well.
+
+Now that we can do both of them, what I loved about ChakraUI is that I could create a file named `icons` and put all my icons in the same file to use them whenever and wherever I wanted.
+
+For this ChakraUI had a utility function `createIcon` with a lot of options. Here they are:
+
+```tsx
+interface CreateIconOptions {
+  /**
+   * The icon `svg` viewBox
+   * @default "0 0 24 24"
+   */
+  viewBox?: string;
+  /**
+   * The `svg` path or group element
+   * @type React.ReactElement | React.ReactElement[]
+   */
+  path?: React.ReactElement | React.ReactElement[];
+  /**
+   * If the `svg` has a single path, simply copy the path's `d` attribute
+   */
+  d?: string;
+  /**
+   * The display name useful in the dev tools
+   */
+  displayName?: string;
+  /**
+   * Default props automatically passed to the component; overwritable
+   */
+  defaultProps?: IconProps;
+}
+```
+
+The goal of this function is only to quickly create components that use our already made `<Icon/>` component and return a simple component for our icon. It's cool to use when working with a design team that work on figma for example, you just need copy their icon as SVG and paste it in the `createIcon` with the name and the size.
+
+Here is the entire code for the `createIcon` utility function.
+
+```tsx
+interface CreateIconOptions {
+  /**
+   * The icon `svg` viewBox
+   * @default "0 0 24 24"
+   */
+  viewBox?: string;
+  /**
+   * The `svg` path or group element
+   * @type React.ReactElement | React.ReactElement[]
+   */
+  path?: React.ReactElement | React.ReactElement[];
+  /**
+   * If the `svg` has a single path, simply copy the path's `d` attribute
+   */
+  d?: string;
+  /**
+   * The display name useful in the dev tools
+   */
+  displayName?: string;
+  /**
+   * Default props automatically passed to the component; overwritable
+   */
+  defaultProps?: IconProps;
+}
+
+export function createIcon(options: CreateIconOptions) {
+  const {
+    viewBox = '0 0 24 24',
+    d: pathDefinition,
+    displayName,
+    defaultProps = {},
+  } = options;
+  const path = Children.toArray(options.path);
+
+  const Comp = React.forwardRef<React.ElementRef<typeof Icon>, IconProps>(
+    (props, ref) => (
+      <Icon ref={ref} viewBox={viewBox} {...defaultProps} {...props}>
+        {path.length ? path : <path fill="currentColor" d={pathDefinition} />}
+      </Icon>
+    )
+  );
+
+  Comp.displayName = displayName;
+
+  return Comp;
+}
+```
+
+Now let's create the same code as previous examples but with a an icon created with this function.
+
+<ComponentExample title="createIcon Example">
+  <CreateIconIconExample />
+  <div slot="code">
+    ```tsx file=<rootDir>/components/examples/svg-icons-tailwind-react/create-icon.tsx
+    ```
+  </div>
+</ComponentExample>
+
+Now you know how I manage svg icons in my react applications with tailwind. I hope this example helped you and do not hesitate to let me know if you use the same `<Icon />` component in your project.

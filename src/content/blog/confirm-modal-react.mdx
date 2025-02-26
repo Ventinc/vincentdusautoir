@@ -1,0 +1,142 @@
+---
+title: Confirm modal with React
+description: How I implement Confirm Modal with React, RadixUI and TailwindCSS.
+date: '2023-10-05'
+slug: confirm-modal-react
+---
+
+import ComponentExample from '#/components/component-example.astro';
+import { ConfirmHook } from '#/components/examples/confirm-modal-react/hook.tsx';
+import { ConfirmVanilla } from '#/components/examples/confirm-modal-react/vanilla.tsx';
+import { Toaster } from '#/components/ui/toaster.tsx';
+
+While working on a side project of mine, I wanted to confirm if the user wanted to delete the content or not. For that I used default `confirm` function in javascript that work like this:
+
+```ts
+if (confirm('Do you want to delete this content ?')) {
+  toast({ title: 'Confirm True', description: 'Delete content' });
+} else {
+  toast({ title: 'Confirm False', description: 'Do nothing' });
+}
+```
+
+It take a simple message to ask if the person want to do the action or to cancel the action. It's a simple "Two Step Verification" to confirm that the user want to make the action.
+
+<ComponentExample
+  title="Vanilla Example"
+  filesrc="/components/examples/confirm/vanilla.tsx"
+>
+  <ConfirmVanilla client:load />
+</ComponentExample>
+
+This way is simple enought, but if you want the confirm dialog to use your design you can't do nothing because confirm is manage by the browser itself. You can't change color, padding, or even buttons text. That's why in my project I prefer to copy a component that I already made that does the same.
+
+<ComponentExample
+  title="useConfirm Example"
+  filesrc="/components/examples/confirm/hook.tsx"
+>
+  <ConfirmHook client:load />
+</ComponentExample>
+
+The principle of the component is totally the same as vanilla but this time we use `useConfirm` hook that return a boolean async function. The async function just display the Confirm Dialog and while the alert is displayed and we are waiting for the promise result, if we click on Cancel we resolve the promise with `false` and if we click on Ok we resolve it with `true`. It's simple as that.
+
+Now let's build the `ConfirmDialogProvider` and Context. But first we need the component `ConfirmDialog` for this one I use `AlertDialog` component from [RadixUI](https://www.radix-ui.com/primitives/docs/components/alert-dialog) with TailwindCSS made on [shadcn/ui](https://ui.shadcn.com/docs/components/alert-dialog).
+
+```tsx
+const ConfirmDialog = ({
+  title,
+  description,
+  onConfirm,
+  onCancel,
+  isOpen,
+}: {
+  title: string;
+  description?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  isOpen: boolean;
+}) => {
+  return (
+    <AlertDialog open={isOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
+          {description ? (
+            <AlertDialogDescription>{description}</AlertDialogDescription>
+          ) : null}
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={onCancel}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onConfirm}>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+```
+
+Once `ConfirmDialog` is made. We need to create the type of the function that the Context will return.
+
+```tsx
+type ConfirmParams = Omit<ComponentPropsWithoutRef<typeof ConfirmDialog>, "onConfirm" | "onCancel" | "isOpen">;
+type ConfirmFn = (p: ConfirmParams): Promise<boolean>;
+```
+
+`ConfirmParams` is only `title` and `description` but you can add `confirmText` for example and other props in `ConfirmDialog` that you need for your design. We don't need `onConfirm`, `onCancel` and `isOpen`. Because we do not need to manage that with `ConfirmFn`. The context will set values for those props.
+
+Here is the code for the ConfirmDialogProvider and the ConfirmDialogContext. There is comments to explain how it works. It's really simple and very useful for any app you make I think.
+
+```tsx
+const ConfirmDialogContext = createContext<ConfirmFn>(() => {
+  return new Promise((res) => res(true));
+});
+
+export const ConfirmDialogProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [open, setOpen] = useState(false); // To know if we display ConfirmDialog component
+  const [props, setProps] = useState<ConfirmParams>({
+    title: 'Confirm Default Title',
+  }); // Current props set in ConfirmFn params
+  const resolveRef = useRef<(v: boolean) => void>(); // To have a reference of the current promise;
+
+  const confirm = useCallback((p: ConfirmParams) => {
+    // We create promise and set the resolveRef with the promise resolve function. We also and the props and set open to true
+    return new Promise<boolean>((res) => {
+      setProps(p);
+      setOpen(true);
+      resolveRef.current = res;
+    });
+  }, []);
+
+  return (
+    <ConfirmDialogContext.Provider value={confirm}>
+      <ConfirmDialog
+        {...props}
+        isOpen={open}
+        onConfirm={() => {
+          // We resolve the promise with true and close ConfirmDialog
+          resolveRef.current?.(true);
+          setOpen(false);
+        }}
+        onCancel={() => {
+          // We resolve the promise with false and close ConfirmDialog
+          resolveRef.current?.(false);
+          setOpen(false);
+        }}
+      />
+      {children}
+    </ConfirmDialogContext.Provider>
+  );
+};
+```
+
+And now to have access to the `useConfirm` hook anywhere we just need to export this function below and wrap the app we are making with `<ConfirmDialogProvider />`.
+
+```tsx
+export const useConfirm = () => useContext(ConfirmDialogContext);
+```
+
+Thanks for reading how I confirm user actions with React, TailwindCSS and RadixUI. I hope it helps you to create your own confirm dialog.

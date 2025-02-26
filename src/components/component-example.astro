@@ -1,0 +1,114 @@
+---
+import { cn } from '#/utils/tailwind';
+
+interface Props {
+  align?: 'start' | 'center' | 'end';
+  title?: string;
+  class?: string;
+}
+
+const { align = 'center', title, class: className } = Astro.props;
+---
+
+<div
+  id="component-example"
+  class={cn('group relative my-4 rounded-md', className)}
+>
+  {
+    (title || Astro.slots.has('code')) && (
+      <div class="mb-1 flex h-6 w-fit items-center gap-1 font-mono text-xs">
+        {title && (
+          <div class="bg-neutral-200 px-2 rounded-full h-full flex items-center">
+            <p class="font-medium">{title}</p>
+          </div>
+        )}
+        {title && Astro.slots.has('code') ? (
+          <div class="h-full w-px bg-neutral-100 mx-1" />
+        ) : null}
+        {Astro.slots.has('code') && (
+          <div class="flex flex-row rounded-full p-0.5 bg-neutral-200">
+            <button
+              data-tab-trigger="demo"
+              data-state="active"
+              type="button"
+              class="data-[state=active]:bg-indigo-200 px-2 py-0.5 rounded-full data-[state=active]:text-indigo-600 cursor-pointer"
+            >
+              Demo
+            </button>
+            <button
+              data-tab-trigger="code"
+              type="button"
+              class="data-[state=active]:bg-indigo-200 px-2 py-0.5 rounded-full data-[state=active]:text-indigo-600 cursor-pointer"
+            >
+              Code
+            </button>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  <div
+    data-tab-content="demo"
+    class={cn(
+      'data-[tab-status=hidden]:hidden my-0 flex min-h-[350px] overflow-x-auto rounded-lg border-2 border-zinc-200 p-4 bg-white',
+      {
+        'items-center': align === 'center',
+        'items-start': align === 'start',
+        'items-end': align === 'end',
+      },
+      className
+    )}
+  >
+    <div class="mx-auto">
+      <slot />
+    </div>
+  </div>
+
+  <div
+    data-tab-content="code"
+    data-tab-status="hidden"
+    class="[&_pre]:my-0 data-[tab-status=hidden]:hidden"
+  >
+    <slot name="code" />
+  </div>
+</div>
+
+<script>
+  function setupTabsTriggers(root: Element) {
+    const triggers = root.querySelectorAll('[data-tab-trigger]');
+    const contents = root.querySelectorAll('[data-tab-content]');
+
+    contents.forEach((c, key) =>
+      c.setAttribute('data-tab-status', key === 0 ? 'visible' : 'hidden')
+    );
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        // Remove active state from all triggers and contents
+        triggers.forEach((t) => t.removeAttribute('data-state'));
+        contents.forEach((c) => c.setAttribute('data-tab-status', 'hidden'));
+
+        // Add active state to clicked trigger and corresponding content
+        trigger.setAttribute('data-state', 'active');
+        const tabId = trigger.getAttribute('data-tab-trigger');
+        const content = root.querySelector(`[data-tab-content="${tabId}"]`);
+        if (content) {
+          content.setAttribute('data-tab-status', 'visible');
+        }
+      });
+    });
+  }
+  function setupTabs() {
+    const componentExample = document.querySelectorAll('#component-example');
+
+    componentExample.forEach((root) => {
+      setupTabsTriggers(root);
+    });
+  }
+
+  // Setup tabs when the component loads
+  setupTabs();
+  // Setup tabs when content changes (for client-side navigation)
+  document.addEventListener('astro:page-load', setupTabs);
+</script>
