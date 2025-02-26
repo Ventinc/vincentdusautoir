@@ -9,10 +9,10 @@ const { title, date, slug } = Astro.props;
 <div
   class="bg-white rounded-lg border flex flex-row gap-2 items-center py-1.5 px-3 border-neutral-200 hover:border-indigo-200 hover:bg-indigo-50 group relative overflow-hidden"
 >
-  <span class="text-sm text-neutral-500 font-mono"
+  <span class="text-xs md:text-sm text-neutral-500 font-mono shrink-0"
     ><FormattedDate date={date} /></span
   >
-  <h2 class="text-base">
+  <h2 class="text-sm md:text-base">
     <a href={`/blog/${slug}`}>{title}<span class="absolute inset-0"></span></a>
   </h2>
 </div>
