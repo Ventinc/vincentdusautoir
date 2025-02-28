@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
-import SiteLayout from '../layouts/site-layout.astro';
-import PostCard from '../components/post-card.astro';
+import { getPosts } from '#/utils/blog';
 import type { CollectionEntry } from 'astro:content';
 import { format } from 'date-fns';
+import PostCard from '../components/post-card.astro';
+import SiteLayout from '../layouts/site-layout.astro';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getPosts()).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
@@ -41,6 +41,7 @@ const sortedYears = Object.keys(postsByYears).sort((a, b) => {
       freelance. Here, I write about my experiences and what I learn in life and
       mostly about software development.
     </p>
+    <p>Impact-Site-Verification: 6cc80e6e-6424-4d7c-ad5c-8459c804952d</p>
   </div>
   <main class="flex flex-col gap-4">
     {
