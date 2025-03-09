@@ -1,0 +1,190 @@
+---
+title: Using a VPS and Docker is the way
+description: Why I use a VPS and Docker for my projects
+date: '2025-02-28'
+slug: using-a-vps-and-docker
+published: false
+---
+
+I've been using all kind of services to deploy projects over the years. From AWS, to Vercel, to Heroku, Digital Ocean App Plaforms, etc.
+
+And for each services it's either complicated to setup, expensive, or both.
+
+So I've decided to try something that is here for a while but I never really used because I was scared of the learning curve.
+
+I'm talking about **VPS**.
+
+## Prerequisites
+
+- Docker installed on your local machine
+- Knowing a bit of Docker and Docker Compose
+
+## What is a VPS ?
+
+A VPS is a virtual private server. It's a virtual machine that is created on a physical machine. It's like a small part of a computer that is created on a server.
+
+## Why I wanted use a VPS and Docker ?
+
+I wanted to use a VPS and Docker for my project because it's a lot cheaper than other services, easy to setup and manage. And there is no hidden fees that can be discovered after it's too late, for example high bills for traffic or storage.
+
+And I wanted to learn how to use it. So I can deploy what I want, when I want, and how I want.
+
+## How to setup a VPS ?
+
+I've been using [Digital Ocean](https://digitalocean.com)(Affiliate link) for all my VPS needs. It's a great service that is very easy to use. But you can use any other VPS provider you want.
+
+### Step 1: Create a VPS
+
+Create a VPS and personally I use ubuntu, but you can use any other OS. However this guide is for ubuntu.
+
+### Step 2: Connect to your VPS
+
+Connect to your VPS using SSH or account and password. As it was created.
+
+```bash
+ssh root@your_vps_ip
+```
+
+### Step 3: Create a new user
+
+To not directly use the root user, we will create a new user. It's more secure and we will deactivate the root user.
+
+```bash
+adduser username # Create the user
+usermod -aG sudo username # Add the user to the sudo group
+su - username # Switch to the new user
+sudo apt update # Update the package list and test that the user has sudo access
+```
+
+If it works, we can now add ssh key authentication to this user.
+
+### Step 4: Setup SSH Key Authentication
+
+On your local machine, generate a ssh key if you don't have one yet.
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+This key will be in `~/.ssh/id_ed25519.pub`.
+
+Now we need to copy the SSH key to the new user on the server.
+
+```bash
+ssh-copy-id -i ~/.ssh/id_ed25519.pub username@your_vps_ip
+```
+
+Now you should be able to connect to your VPS using the new user.
+
+```bash
+ssh username@your_vps_ip
+```
+
+### Step 5: Harden SSH configuration
+
+The goal is to disable root login and password authentication. So we need to edit the SSH configuration file.
+
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+Modify the following parameters:
+
+```bash
+# Disable root login
+PermitRootLogin no
+
+# Disable password authentication
+PasswordAuthentication no
+```
+
+Then restart SSH service.
+
+```bash
+sudo service ssh restart
+```
+
+**⚠️ Before login out, make sure that the new settings works.**
+
+On another terminal, try to connect to your VPS using your username.
+
+```bash
+ssh username@your_vps_ip
+```
+
+If it works, you can now login out.
+
+### Step 6: Set up a firewall (ufw)
+
+UFW is a firewall that is very easy to use.
+
+```bash
+sudo apt install ufw
+```
+
+Allow SSH, HTTP and HTTPS.
+
+```bash
+sudo ufw allow OpenSSH
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+```
+
+Enable the firewall.
+
+```bash
+sudo ufw enable
+```
+
+Checkout UFW status.
+
+```bash
+sudo ufw status
+```
+
+### Step 7: Install and Configure Fail2Ban (Optional)
+
+This is optional, but it's a good way to protect your VPS from brute force authentication attemps.
+
+```bash
+sudo apt install fail2ban
+```
+
+Create a local configuration file.
+
+```bash
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+```
+
+Edit the configuration file.
+
+```bash
+sudo nano /etc/fail2ban/jail.local
+```
+
+And ensure the following lines are set:
+
+```ini
+[sshd]
+enabled = true
+port = 22 ## Change this if you've modified your SSH port
+maxretry = 5
+bantime = 3600
+```
+
+Restart Fail2Ban service.
+
+```bash
+sudo service fail2ban restart
+```
+
+Checkout Fail2Ban status.
+
+```bash
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+```
+
+Now your VPS is more secure.
+
+### Step 8: Add some SWAP to the VPS (Optional)

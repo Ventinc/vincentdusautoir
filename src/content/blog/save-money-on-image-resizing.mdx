@@ -1,0 +1,52 @@
+---
+title: Save Money on Image Resizing
+description: How to save money on image resizing
+date: '2025-03-09'
+slug: save-money-on-image-resizing
+published: true
+---
+
+Working with images is a common task for many developers. Whether it's for a website, a mobile app, or a desktop application, images are a part of our lives.
+
+But when it comes to image, resizing is almost mandatory. To improve user experience, we need to load images at the best size. And not a full size image in 4k.
+
+The problem is that image resizing is not free. And when we search online for it, we can only find paid services. It's good because they have a lot of features around it. But it's not good for our wallet. And if we only need to resize an image, we don't need all those features.
+
+## IPX is the solution
+
+The solution is not free but it's very cheap. I'm talking about a simple VPS and an express server with [IPX](https://github.com/unjs/ipx).
+
+The code is pretty simple:
+
+```ts
+import express from 'express';
+import {
+  createIPX,
+  ipxFSStorage,
+  ipxHttpStorage,
+  createIPXNodeServer,
+} from 'ipx';
+
+const ipx = createIPX({
+  storage: ipxFSStorage({
+    dir: './public',
+  }),
+  httpStorage: ipxHttpStorage({
+    domains: ['cdn.example.com'], // Domains that is authorized to resize images
+  }),
+});
+
+express().use(createIPXNodeServer(ipx)).listen(8080);
+```
+
+Then when you host this service, use your CDN of choice, and each request will be saved on the CDN. And setup something like `img.example.com` to use this URI for the service.
+
+Now that everything is setup, you can resize your image with the following URI:
+
+```
+https://img.example.com/width_200,format_webp/https://cdn.example.com/image.jpg
+```
+
+And with this url, you'll have an image resized with the same aspect ratio with a width of 200px, in webp format, and saved on the CDN cache.
+
+For more information about all modifiers, you can read the [IPX documentation](https://github.com/unjs/ipx?tab=readme-ov-file#modifiers).
